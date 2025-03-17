@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ziel.iml" filepath="$PROJECT_DIR$/ziel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ziel-be/src/main/ziel-be.iml" filepath="$PROJECT_DIR$/ziel-be/src/main/ziel-be.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ziel-be/src/test/ziel-be-test.iml" filepath="$PROJECT_DIR$/ziel-be/src/test/ziel-be-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ziel-fe/ziel-fe.iml" filepath="$PROJECT_DIR$/ziel-fe/ziel-fe.iml" />
+    </modules>
+  </component>
+</project>
