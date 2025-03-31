@@ -1,0 +1,1 @@
+CREATE CAST (character varying AS role) WITH INOUT AS ASSIGNMENT;
