@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Routes,
   Route,
-  Link
+  Link,
+  useLocation
 } from "react-router-dom";
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -20,9 +21,14 @@ const drawerWidth = 240;
 
 function ListItemLink(props) {
   const { icon, primary, to } = props;
+  const location = useLocation();
 
   return (
-    <ListItemButton component={Link} to={to}>
+    <ListItemButton
+      component={Link}
+      to={to}
+      selected={location.pathname === to}
+    >
       {icon ? <ListItemIcon>{icon}</ListItemIcon> : null}
       <ListItemText primary={primary} />
     </ListItemButton>
