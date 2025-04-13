@@ -30,11 +30,14 @@ public class User implements UserDetails {
             columnDefinition = "email")
     private String email;
 
-    @Column(name = "username", nullable = false)
-    private String username;
-
     @Column(nullable = false)
     private String password;
+
+    @Column(name = "name", nullable = false)
+    private String name;
+
+    @Column(name = "surname", nullable = false)
+    private String surname;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "user_role", nullable = false)
