@@ -11,6 +11,8 @@ import {
 
 import { useState } from 'react';
 
+import axios from 'axios';
+
 export default function Register() {
     const [formData, setFormData] = useState({
       email: "",
@@ -38,6 +40,20 @@ export default function Register() {
             console.log(formData.email);
             console.log(formData.password);
             console.log(formData.role);
+
+            axios.post("http://localhost:8080/api/auth/register", formData)
+              .then((res) => {
+                console.log("✅ Success:", res.data);
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.error("❌ Backend returned an error response:", error.response);
+                } else if (error.request) {
+                  console.error("❌ No response received:", error.request);
+                } else {
+                  console.error("❌ Axios error:", error.message);
+                }
+              });
         } else {
             setInvalid(true);
         }
