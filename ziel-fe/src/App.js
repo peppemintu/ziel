@@ -16,7 +16,8 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Register from './Register.js'
+import Register from './auth/Register.js'
+import Login from './auth/Login.js'
 
 const drawerWidth = 240;
 
@@ -79,10 +80,6 @@ export default function App() {
       </Box>
     </Router>
   );
-}
-
-function Login() {
-  return <h2>Login</h2>;
 }
 
 function Dashboard() {
