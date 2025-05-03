@@ -4,24 +4,59 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="202af95d-18e8-4ae0-ae87-215adfc8b724" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ziel-fe/ziel-fe.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/ziel.iml" afterDir="false" />
+    <list default="true" id="202af95d-18e8-4ae0-ae87-215adfc8b724" name="Changes" comment="[FE] Refine authorisation module&#10; &#10; - use httpOnly cookies to store tokens;&#10; - add user controller, service, dto.">
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/controller/CourseController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/dto/CourseDto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/mapper/CourseMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/model/AttestationForm.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/model/Course.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/repository/CourseRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/service/CourseService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/resources/db/migration/V1_3__CREATE_TABLE_COURSE.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-be/src/main/resources/db/migration/V1_4__CREATE_CAST_FOR_ATTESTATION_FORM_ENUM.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ziel-fe/src/course/CreateCoursePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziel-be/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/ziel-be/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziel-be/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/ziel-be/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziel-fe/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/ziel-fe/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziel-fe/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/ziel-fe/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ziel-fe/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/ziel-fe/src/App.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="module" />
+    </option>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Kotlin Class" />
+        <option value="Enum" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenRunner">
+    <option name="delegateBuildToMaven" value="true" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 4
@@ -32,25 +67,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.ZielApplication (1).executor": "Run",
-    "Application.ZielApplication.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "dart.analysis.tool.window.visible": "false",
-    "git-widget-placeholder": "main",
-    "jdk.selected.JAVA_MODULE": "21",
-    "kotlin-language-version-configured": "true",
-    "project.structure.last.edited": "Facets",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "show.migrate.to.gradle.popup": "false"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ZielApplication (1).executor&quot;: &quot;Run&quot;,
+    &quot;Application.ZielApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.ZielApplicationTests (1).executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ZielApplicationTests.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ZielApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ziel [install,--non-recursive].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.ziel [install].executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Shell Script.ZielFrontend.executor&quot;: &quot;Run&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;authentication&quot;,
+    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/greendal/roadmap/ziel/ziel-be/src/main/resources/db/migration&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.projectsettings.compiler.annotationProcessors&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
   }
-}]]></component>
-  <component name="RunManager">
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ziel-be/src/main/resources/db/migration" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/ziel-fe/src/auth" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Application.ZielApplication">
     <configuration name="ZielApplication" type="Application" factoryName="Application" temporary="true">
       <option name="MAIN_CLASS_NAME" value="com.greendal.ziel.ZielApplication" />
       <module name="ziel" />
@@ -64,9 +118,62 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="ZielApplicationTests (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ziel-be-test" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.greendal.ziel.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.greendal.ziel" />
+      <option name="MAIN_CLASS_NAME" value="com.greendal.ziel.ZielApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZielApplicationTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="ziel" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.greendal.ziel.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.greendal.ziel" />
+      <option name="MAIN_CLASS_NAME" value="com.greendal.ziel.ZielApplicationTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="ZielFrontend" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="npm start" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="$PROJECT_DIR$/ziel-fe" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$/ziel-fe" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="/bin/zsh" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="false" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.ZielApplication" />
+      <item itemvalue="JUnit.ZielApplicationTests (1)" />
+      <item itemvalue="JUnit.ZielApplicationTests" />
+      <item itemvalue="Shell Script.ZielFrontend" />
+    </list>
     <recent_temporary>
       <list>
         <item itemvalue="Application.ZielApplication" />
+        <item itemvalue="JUnit.ZielApplicationTests (1)" />
+        <item itemvalue="JUnit.ZielApplicationTests" />
       </list>
     </recent_temporary>
   </component>
@@ -79,6 +186,122 @@
       <option name="presentableId" value="Default" />
       <updated>1742222935065</updated>
     </task>
+    <task id="LOCAL-00001" summary="Add initial projects.">
+      <option name="closed" value="true" />
+      <created>1742229478647</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1742229478647</updated>
+    </task>
+    <task id="LOCAL-00002" summary="[BE] Add User model and authentication logic with Spring Security and JWT">
+      <option name="closed" value="true" />
+      <created>1743438989383</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1743438989383</updated>
+    </task>
+    <task id="LOCAL-00003" summary="[FE] Add routing and MUI dependencies">
+      <option name="closed" value="true" />
+      <created>1743439056694</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1743439056694</updated>
+    </task>
+    <task id="LOCAL-00004" summary="[FE] Highlight the active link in sidebar">
+      <option name="closed" value="true" />
+      <created>1743441770045</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1743441770045</updated>
+    </task>
+    <task id="LOCAL-00005" summary="[FE] Create a separate component for Register form&#10;&#10;Added validation for emptiness of the field for email">
+      <option name="closed" value="true" />
+      <created>1744400838613</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1744400838613</updated>
+    </task>
+    <task id="LOCAL-00006" summary="[FE] Add fields and more validation to Register">
+      <option name="closed" value="true" />
+      <created>1744487580532</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1744487580532</updated>
+    </task>
+    <task id="LOCAL-00007" summary="[BE + FE] Swap username for user name &amp; surname">
+      <option name="closed" value="true" />
+      <created>1744514592756</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1744514592756</updated>
+    </task>
+    <task id="LOCAL-00008" summary="[FE] Connect to backend (registration)">
+      <option name="closed" value="true" />
+      <created>1745092026676</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1745092026676</updated>
+    </task>
+    <task id="LOCAL-00009" summary="[FE] Update Register and create Login.&#10;&#10;- Refactor to create form dynamically from a list of fields;&#10;- Add status to the form;&#10;- Redirect to dashboard after success.">
+      <option name="closed" value="true" />
+      <created>1745172871145</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1745172871145</updated>
+    </task>
+    <task id="LOCAL-00010" summary="[FE] Refine authorisation module&#10; &#10; - use httpOnly cookies to store tokens;&#10; - add user controller, service, dto.">
+      <option name="closed" value="true" />
+      <created>1746009472173</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1746009472173</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add initial projects." />
+    <MESSAGE value="[BE] Add User model and authentication logic with Spring Security and JWT" />
+    <MESSAGE value="[FE] Add routing and MUI dependencies" />
+    <MESSAGE value="[FE] Highlight the active link in sidebar" />
+    <MESSAGE value="[FE] Create a separate component for Register form&#10;&#10;Added validation for emptiness of the field for email" />
+    <MESSAGE value="[FE] Add fields and more validation to Register" />
+    <MESSAGE value="[BE + FE] Swap username for user name &amp; surname" />
+    <MESSAGE value="[FE] Connect to backend (registration)" />
+    <MESSAGE value="[FE] Update Register and create Login.&#10;&#10;- Refactor to create form dynamically from a list of fields;&#10;- Add status to the form;&#10;- Redirect to dashboard after success." />
+    <MESSAGE value="[FE] Refine authorisation module&#10; &#10; - use httpOnly cookies to store tokens;&#10; - add user controller, service, dto." />
+    <option name="LAST_COMMIT_MESSAGE" value="[FE] Refine authorisation module&#10; &#10; - use httpOnly cookies to store tokens;&#10; - add user controller, service, dto." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/ziel-be/src/main/java/com/greendal/ziel/course/service/CourseService.java</url>
+          <line>19</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

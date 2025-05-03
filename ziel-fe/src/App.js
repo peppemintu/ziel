@@ -18,6 +18,7 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Register from './auth/Register.js'
 import Login from './auth/Login.js'
+import CreateCoursePage from './course/CreateCoursePage.js'
 
 const drawerWidth = 240;
 
@@ -68,6 +69,9 @@ export default function App() {
               <ListItem disablePadding>
                 <ListItemLink to="/dashboard" primary="Dashboard" />
               </ListItem>
+              <ListItem disablePadding>
+                <ListItemLink to="/courses/new" primary="Create Course" />
+              </ListItem>
             </List>
           </Box>
         </Drawer>
@@ -76,6 +80,7 @@ export default function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/courses/new" element={<CreateCoursePage />} />
         </Routes>
       </Box>
     </Router>

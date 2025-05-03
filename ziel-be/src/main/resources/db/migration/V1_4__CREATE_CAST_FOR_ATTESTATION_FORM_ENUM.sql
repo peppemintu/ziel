@@ -1,0 +1,1 @@
+CREATE CAST (character varying AS attestation_form_enum) WITH INOUT AS ASSIGNMENT;
