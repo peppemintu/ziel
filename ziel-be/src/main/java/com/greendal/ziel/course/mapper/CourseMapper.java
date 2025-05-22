@@ -16,5 +16,8 @@ public interface CourseMapper {
     @Mapping(target = "updatedAt", ignore = true)
     Course toEntity(CourseDto dto);
     CourseDto toDto(Course course);
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
     void updateEntityFromDto(CourseDto dto, @MappingTarget Course course);
 }

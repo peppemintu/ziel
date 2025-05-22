@@ -1,6 +1,6 @@
 CREATE TYPE attestation_form_enum AS ENUM ('EXAM', 'CREDIT');
 
-CREATE TABLE course (
+CREATE TABLE IF NOT EXISTS course (
     course_id UUID PRIMARY KEY,
     course_name VARCHAR(255) NOT NULL,
     major_code VARCHAR(50) NOT NULL,
