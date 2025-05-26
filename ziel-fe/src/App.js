@@ -19,6 +19,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Register from './auth/Register.js'
 import Login from './auth/Login.js'
 import CreateCoursePage from './course/CreateCoursePage.js'
+import StudyPlanPage from './course/StudyPlanPage.jsx'
 
 const drawerWidth = 240;
 
@@ -81,6 +82,7 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses/new" element={<CreateCoursePage />} />
+          <Route path="/plan" element={<StudyPlanPage />} />
         </Routes>
       </Box>
     </Router>
