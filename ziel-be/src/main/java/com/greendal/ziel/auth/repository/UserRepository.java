@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends ListCrudRepository<User, UUID> {
+public interface UserRepository extends ListCrudRepository<User, Long> {
     User findByEmail(String email);
 }

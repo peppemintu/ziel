@@ -20,8 +20,9 @@ public class UserService {
 
         UserResponse userResponse = new UserResponse();
         userResponse.setEmail(user.getEmail());
-        userResponse.setName(user.getName());
-        userResponse.setSurname(user.getSurname());
+        userResponse.setFirstName(user.getFirstName());
+        userResponse.setLastName(user.getLastName());
+        userResponse.setPatronymic(user.getPatronymic());
         userResponse.setRole(user.getRole());
 
         return userResponse;

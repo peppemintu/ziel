@@ -10,7 +10,8 @@ import lombok.*;
 public class RegisterRequest {
     private String email;
     private String password;
-    private String name;
-    private String surname;
+    private String firstName;
+    private String lastName;
+    private String patronymic;
     private Role role;
 }

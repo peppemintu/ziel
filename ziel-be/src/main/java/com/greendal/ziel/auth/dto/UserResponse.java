@@ -12,7 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserResponse {
     private String email;
-    private String name;
-    private String surname;
+    private String firstName;
+    private String lastName;
+    private String patronymic;
     private Role role;
 }

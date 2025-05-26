@@ -1,5 +1,7 @@
 package com.greendal.ziel.auth.model;
 
+import com.greendal.ziel.study.model.Student;
+import com.greendal.ziel.study.model.Teacher;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,11 +22,11 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id", updatable = false, nullable = false)
-    private UUID id;
+    private Long id;
 
-    @Column(name = "user_email",
+    @Column(name = "email",
             unique = true,
             nullable = false,
             columnDefinition = "email")
@@ -33,15 +35,24 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @Column(name = "name", nullable = false)
-    private String name;
+    @Column(name = "first_name", nullable = false)
+    private String firstName;
 
-    @Column(name = "surname", nullable = false)
-    private String surname;
+    @Column(name = "last_name", nullable = false)
+    private String lastName;
+
+    @Column(nullable = false)
+    private String patronymic;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "user_role", nullable = false)
+    @Column(name = "role", nullable = false)
     private Role role = Role.STUDENT;
+
+    @OneToOne(mappedBy = "user")
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "user")
+    private Student student;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
