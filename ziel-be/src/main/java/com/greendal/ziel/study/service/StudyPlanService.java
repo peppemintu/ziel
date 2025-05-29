@@ -23,8 +23,12 @@ public class StudyPlanService {
     }
 
     public StudyPlanResponseDto getStudyPlanById(Long id) {
-        return planMapper.toDto(planRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Study plan not found")));
+        return planMapper.toDto(getStudyPlanEntityById(id));
+    }
+
+    public StudyPlan getStudyPlanEntityById(Long id) {
+        return planRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Study plan not found with id " + id));
     }
 
     public List<StudyPlanResponseDto> getAllStudyPlans() {
@@ -33,14 +37,14 @@ public class StudyPlanService {
 
     public StudyPlanResponseDto updateStudyPlan(Long id, StudyPlanRequestDto dto) {
         StudyPlan existing = planRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Study plan not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Study plan not found with id " + id));
         planMapper.updateStudyPlanFromDto(dto, existing);
         return planMapper.toDto(planRepository.save(existing));
     }
 
     public void deleteStudyPlan(Long id) {
         if (!planRepository.existsById(id)) {
-            throw new EntityNotFoundException("Study plan not found");
+            throw new EntityNotFoundException("Study plan not found with id " + id);
         }
         planRepository.deleteById(id);
     }

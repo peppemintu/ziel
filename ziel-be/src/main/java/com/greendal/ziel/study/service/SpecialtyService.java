@@ -26,8 +26,12 @@ public class SpecialtyService {
     }
 
     public SpecialtyResponseDto getSpecialtyById(Long id) {
-        return specialtyMapper.toDto(specialtyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Specialty not found")));
+        return specialtyMapper.toDto(getSpecialtyEntityById(id));
+    }
+
+    public Specialty getSpecialtyEntityById(Long id) {
+        return specialtyRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Specialty not found with id " + id));
     }
 
     public List<SpecialtyResponseDto> getAllSpecialties() {
@@ -36,14 +40,14 @@ public class SpecialtyService {
 
     public SpecialtyResponseDto updateSpecialty(Long id, SpecialtyRequestDto dto) {
         Specialty existing = specialtyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Specialty not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Specialty not found with id " + id));
         specialtyMapper.updateSpecialtyFromDto(dto, existing);
         return specialtyMapper.toDto(specialtyRepository.save(existing));
     }
 
     public void deleteSpecialty(Long id) {
         if (!specialtyRepository.existsById(id)) {
-            throw new EntityNotFoundException("Specialty not found");
+            throw new EntityNotFoundException("Specialty not found with id " + id);
         }
         specialtyRepository.deleteById(id);
     }

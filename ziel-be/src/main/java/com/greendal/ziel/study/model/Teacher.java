@@ -4,6 +4,8 @@ import com.greendal.ziel.auth.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "teacher")
 @Getter
@@ -23,4 +25,7 @@ public class Teacher {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CourseTeacher> courseTeachers;
 }

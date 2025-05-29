@@ -26,8 +26,12 @@ public class DisciplineService {
     }
 
     public DisciplineResponseDto getDisciplineById(Long id) {
-        return disciplineMapper.toDto(disciplineRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Discipline not found")));
+        return disciplineMapper.toDto(getDisciplineEntityById(id));
+    }
+
+    public Discipline getDisciplineEntityById(Long id) {
+        return disciplineRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Discipline not found with id " + id));
     }
 
     public List<DisciplineResponseDto> getAllDisciplines() {
@@ -36,14 +40,14 @@ public class DisciplineService {
 
     public DisciplineResponseDto updateDiscipline(Long id, DisciplineRequestDto dto) {
         Discipline existing = disciplineRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Discipline not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Discipline not found with id " + id));
         disciplineMapper.updateDisciplineFromDto(dto, existing);
         return disciplineMapper.toDto(disciplineRepository.save(existing));
     }
 
     public void deleteDiscipline(Long id) {
         if (!disciplineRepository.existsById(id)) {
-            throw new EntityNotFoundException("Discipline not found");
+            throw new EntityNotFoundException("Discipline not found with id " + id);
         }
         disciplineRepository.deleteById(id);
     }

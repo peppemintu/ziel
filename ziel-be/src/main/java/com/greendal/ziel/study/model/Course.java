@@ -3,6 +3,8 @@ package com.greendal.ziel.study.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "course")
 @Getter
@@ -23,4 +25,7 @@ public class Course {
     @ManyToOne
     @JoinColumn(name = "group_id", nullable = false)
     private StudentGroup group;
+
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CourseTeacher> courseTeachers;
 }

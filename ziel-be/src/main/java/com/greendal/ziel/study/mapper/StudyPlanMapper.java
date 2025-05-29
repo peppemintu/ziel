@@ -3,13 +3,14 @@ package com.greendal.ziel.study.mapper;
 import com.greendal.ziel.study.dto.studyPlan.StudyPlanRequestDto;
 import com.greendal.ziel.study.dto.studyPlan.StudyPlanResponseDto;
 import com.greendal.ziel.study.model.StudyPlan;
+import com.greendal.ziel.study.service.resolver.Resolver;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = StudyPlanResolver.class)
+@Mapper(componentModel = "spring", uses = Resolver.class)
 public interface StudyPlanMapper {
 
     @Mapping(target = "id", ignore = true)
