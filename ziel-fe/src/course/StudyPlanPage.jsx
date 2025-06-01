@@ -5,6 +5,7 @@ import {
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE = 'http://localhost:8080/api';
 
@@ -28,6 +29,8 @@ export default function StudyPlanPage() {
   const [specialties, setSpecialties] = useState([]);
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState(initialForm);
+  const navigate = useNavigate();
+
 
   // Fetch all data once
   useEffect(() => {
@@ -98,6 +101,20 @@ export default function StudyPlanPage() {
     { field: 'attestationForm', headerName: 'Attestation', width: 130 },
     { field: 'disciplineName', headerName: 'Discipline', width: 200 },
     { field: 'specialtyName', headerName: 'Specialty', width: 200 },
+    {
+      field: 'createCourse',
+      headerName: 'Create Course',
+      width: 150,
+      renderCell: (params) => (
+        <Button
+          variant="outlined"
+          size="small"
+          onClick={() => navigate(`/courses/create/${params.row.id}`, { state: { studyPlan: params.row } })}
+        >
+          Create Course
+        </Button>
+      ),
+    }
   ];
 
   return (

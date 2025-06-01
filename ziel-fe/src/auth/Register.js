@@ -24,13 +24,17 @@ export default function Register() {
         label: "Password",
         required: true,
       },
-      name: {
+      firstName: {
         type: "text",
-        label: "Name",
+        label: "First Name",
       },
-      surname: {
+      lastName: {
         type: "text",
-        label: "Surname",
+        label: "Last Name",
+      },
+      patronymic: {
+        type: "text",
+        label: "Patronymic",
       },
       role: {
         type: "select",

@@ -20,6 +20,13 @@ import Register from './auth/Register.js'
 import Login from './auth/Login.js'
 import CreateCoursePage from './course/CreateCoursePage.js'
 import StudyPlanPage from './course/StudyPlanPage.jsx'
+import CourseCreationPage from './course/CourseCreationPage.jsx'
+import AdminLayout from './admin/AdminLayout';
+import DisciplineAdminPage from './admin/DisciplineAdminPage';
+import SpecialtyAdminPage from './admin/SpecialtyAdminPage';
+import StudentAdminPage from './admin/StudentAdminPage';
+import StudentGroupAdminPage from './admin/StudentGroupAdminPage';
+import TeacherAdminPage from './admin/TeacherAdminPage';
 
 const drawerWidth = 240;
 
@@ -83,6 +90,14 @@ export default function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/courses/new" element={<CreateCoursePage />} />
           <Route path="/plan" element={<StudyPlanPage />} />
+          <Route path="/courses/create/:id" element={<CourseCreationPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route path="disciplines" element={<DisciplineAdminPage />} />
+            <Route path="specialties" element={<SpecialtyAdminPage />} />
+            <Route path="students" element={<StudentAdminPage />} />
+            <Route path="student-groups" element={<StudentGroupAdminPage />} />
+            <Route path="teachers" element={<TeacherAdminPage />} />
+          </Route>
         </Routes>
       </Box>
     </Router>
