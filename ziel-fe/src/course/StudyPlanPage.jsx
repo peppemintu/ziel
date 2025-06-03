@@ -63,30 +63,34 @@ export default function StudyPlanPage() {
   };
 
   const handleSubmit = async () => {
-    await axios.post(`${API_BASE}/plan`, form);
-    setOpen(false);
-    setForm(initialForm);
+    try {
+      const response = await axios.post(`${API_BASE}/plan`, form);
+      const createdPlan = response.data; // assuming backend returns the created plan with `id`
 
-    // Add new plan to list, no re-fetch needed
-    const disciplineName = disciplines.find(d => d.id === +form.disciplineId)?.name || 'Unknown';
-    const specialtyName = specialties.find(s => s.id === +form.specialtyId)?.name || 'Unknown';
+      setOpen(false);
+      setForm(initialForm);
 
-    const newPlan = {
-      ...form,
-      id: Date.now(), // temporary unique ID, replace with backend ID if needed
-      studyYear: +form.studyYear,
-      semester: +form.semester,
-      totalHours: +form.totalHours,
-      creditUnits: +form.creditUnits,
-      totalAuditoryHours: +form.totalAuditoryHours,
-      lectureHours: +form.lectureHours,
-      practiceHours: +form.practiceHours,
-      labHours: +form.labHours,
-      disciplineName,
-      specialtyName,
-    };
+      const disciplineName = disciplines.find(d => d.id === +form.disciplineId)?.name || 'Unknown';
+      const specialtyName = specialties.find(s => s.id === +form.specialtyId)?.name || 'Unknown';
 
-    setStudyPlans(prev => [...prev, newPlan]);
+      const newPlan = {
+        ...createdPlan,
+        studyYear: +createdPlan.studyYear,
+        semester: +createdPlan.semester,
+        totalHours: +createdPlan.totalHours,
+        creditUnits: +createdPlan.creditUnits,
+        totalAuditoryHours: +createdPlan.totalAuditoryHours,
+        lectureHours: +createdPlan.lectureHours,
+        practiceHours: +createdPlan.practiceHours,
+        labHours: +createdPlan.labHours,
+        disciplineName,
+        specialtyName,
+      };
+
+      setStudyPlans(prev => [...prev, newPlan]);
+    } catch (error) {
+      console.error('Failed to create study plan:', error);
+    }
   };
 
   const columns = [

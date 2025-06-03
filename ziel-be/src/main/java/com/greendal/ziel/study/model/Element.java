@@ -21,6 +21,9 @@ public class Element {
     @Column
     private Short hours;
 
+    @Column(name = "is_published", nullable = false)
+    private boolean published;
+
     @Column(name = "element_type", nullable = false)
     @Enumerated(EnumType.STRING)
     private ElementType elementType;

@@ -17,4 +17,5 @@ public class ElementResponseDto {
     private ElementType elementType;
     private AttestationForm attestationForm;
     private Long courseId;
+    private boolean published;
 }

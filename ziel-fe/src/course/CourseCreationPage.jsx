@@ -45,23 +45,28 @@ export default function CourseCreationPage() {
   const handleCreateCourse = async () => {
     if (!groupId || !studyPlan?.id) return;
 
-    // 1. Create Course
-    const courseRes = await axios.post(`${API_BASE}/course`, {
-      studyPlanId: studyPlan.id,
-      groupId: groupId,
-    });
-    const courseId = courseRes.data.id;
+    try {
+      // 1. Create Course
+      const courseRes = await axios.post(`${API_BASE}/course`, {
+        studyPlanId: studyPlan.id,
+        groupId: groupId,
+      });
+      const courseId = courseRes.data.id;
 
-    // 2. Link Teachers
-    await Promise.all(selectedTeacherIds.map(teacherId =>
-      axios.post(`${API_BASE}/course-teacher`, {
-        courseId,
-        teacherId,
-      })
-    ));
+      // 2. Link Teachers
+      await Promise.all(selectedTeacherIds.map(teacherId =>
+        axios.post(`${API_BASE}/course-teacher`, {
+          courseId,
+          teacherId,
+        })
+      ));
 
-    // Navigate to courses list or show success message
-    navigate('/courses'); // Adjust route as needed
+      // ✅ Redirect to the newly created course page
+      navigate(`/courses/${courseId}`);
+    } catch (error) {
+      console.error("Failed to create course:", error);
+      // Optionally show error message to the user
+    }
   };
 
   if (!studyPlan) return <Typography>Loading...</Typography>;

@@ -21,6 +21,7 @@ import Login from './auth/Login.js'
 import CreateCoursePage from './course/CreateCoursePage.js'
 import StudyPlanPage from './course/StudyPlanPage.jsx'
 import CourseCreationPage from './course/CourseCreationPage.jsx'
+import CoursePage from './course/CoursePage.jsx'
 import AdminLayout from './admin/AdminLayout';
 import DisciplineAdminPage from './admin/DisciplineAdminPage';
 import SpecialtyAdminPage from './admin/SpecialtyAdminPage';
@@ -91,6 +92,7 @@ export default function App() {
           <Route path="/courses/new" element={<CreateCoursePage />} />
           <Route path="/plan" element={<StudyPlanPage />} />
           <Route path="/courses/create/:id" element={<CourseCreationPage />} />
+          <Route path="/courses/:id" element={<CoursePage />} />
           <Route path="/admin" element={<AdminLayout />}>
             <Route path="disciplines" element={<DisciplineAdminPage />} />
             <Route path="specialties" element={<SpecialtyAdminPage />} />

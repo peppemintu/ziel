@@ -14,7 +14,7 @@ END $$;
 CREATE TYPE role_enum AS ENUM ('STUDENT', 'TEACHER');
 CREATE TYPE element_type_enum AS ENUM ('LABWORK', 'LECTURE', 'PRACTICE', 'ATTESTATION');
 CREATE TYPE message_status_enum AS ENUM ('READ', 'NOT_READ');
-CREATE TYPE progress_status_enum AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'DONE');
+CREATE TYPE progress_status_enum AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'ACCEPTED', 'NEEDS_CHANGES', 'OVERDUE');
 CREATE TYPE attestation_form_enum AS ENUM ('EXAM', 'CREDIT', 'QUESTIONING', 'REPORT');
 
 -- Optional casts
@@ -115,6 +115,7 @@ CREATE TABLE IF NOT EXISTS course_element (
     course_element_id     BIGSERIAL PRIMARY KEY,
     course_id             BIGINT NOT NULL REFERENCES course(course_id),
     hours                 SMALLINT NOT NULL,
+    is_published          BOOLEAN NOT NULL DEFAULT false,
     element_type          element_type_enum NOT NULL,
     assessment_form       attestation_form_enum
 );

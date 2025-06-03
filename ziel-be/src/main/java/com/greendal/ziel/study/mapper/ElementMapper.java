@@ -14,6 +14,7 @@ import java.util.List;
 public interface ElementMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "course", source = "courseId", qualifiedByName = "resolveCourse")
+    @Mapping(target = "published", ignore = true)
     @Mapping(target = "studentProgresses", ignore = true)
     @Mapping(target = "childrenRelationships", ignore = true)
     @Mapping(target = "parentRelationships", ignore = true)
@@ -26,6 +27,7 @@ public interface ElementMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "course", source = "courseId", qualifiedByName = "resolveCourse")
+    @Mapping(target = "published", ignore = true)
     @Mapping(target = "studentProgresses", ignore = true)
     @Mapping(target = "childrenRelationships", ignore = true)
     @Mapping(target = "parentRelationships", ignore = true)
