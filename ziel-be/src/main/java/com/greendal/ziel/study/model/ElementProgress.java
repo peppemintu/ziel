@@ -3,8 +3,6 @@ package com.greendal.ziel.study.model;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
-
 @Entity
 @Table(name = "course_element_progress")
 @Getter
