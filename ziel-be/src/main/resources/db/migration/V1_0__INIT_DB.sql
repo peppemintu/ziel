@@ -13,12 +13,14 @@ END $$;
 -- ENUM Types
 CREATE TYPE role_enum AS ENUM ('STUDENT', 'TEACHER');
 CREATE TYPE element_type_enum AS ENUM ('LABWORK', 'LECTURE', 'PRACTICE', 'ATTESTATION');
-CREATE TYPE status_enum AS ENUM ('READ', 'NOT_READ', 'IN_PROGRESS', 'PENDING');
-CREATE TYPE attestation_form_enum AS ENUM ('EXAM', 'CREDIT');
+CREATE TYPE message_status_enum AS ENUM ('READ', 'NOT_READ');
+CREATE TYPE progress_status_enum AS ENUM ('NOT_STARTED', 'IN_PROGRESS', 'DONE');
+CREATE TYPE attestation_form_enum AS ENUM ('EXAM', 'CREDIT', 'QUESTIONING', 'REPORT');
 
 -- Optional casts
 CREATE CAST (varchar AS element_type_enum) WITH INOUT AS ASSIGNMENT;
-CREATE CAST (varchar AS status_enum) WITH INOUT AS ASSIGNMENT;
+CREATE CAST (varchar AS message_status_enum) WITH INOUT AS ASSIGNMENT;
+CREATE CAST (varchar AS progress_status_enum) WITH INOUT AS ASSIGNMENT;
 CREATE CAST (varchar AS role_enum) WITH INOUT AS ASSIGNMENT;
 CREATE CAST (varchar AS attestation_form_enum) WITH INOUT AS ASSIGNMENT;
 
@@ -120,7 +122,7 @@ CREATE TABLE IF NOT EXISTS course_element (
 -- Course Element Progress
 CREATE TABLE IF NOT EXISTS course_element_progress (
     progress_id           BIGSERIAL PRIMARY KEY,
-    status                status_enum NOT NULL,
+    status                progress_status_enum NOT NULL,
     grade                 INTEGER,
     course_element_id     BIGINT NOT NULL REFERENCES course_element(course_element_id),
     student_id            BIGINT NOT NULL REFERENCES student(student_id)
@@ -146,7 +148,7 @@ CREATE TABLE IF NOT EXISTS message (
     message_id            BIGSERIAL PRIMARY KEY,
     content               VARCHAR(255) NOT NULL,
     sent_at               TIMESTAMP NOT NULL,
-    status                status_enum NOT NULL,
+    status                message_status_enum NOT NULL,
     user_id               BIGINT NOT NULL REFERENCES usr(user_id),
     course_element_id     BIGINT NOT NULL REFERENCES course_element(course_element_id)
 );
