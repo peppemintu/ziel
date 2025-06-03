@@ -15,6 +15,7 @@ public interface StudentMapper {
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "group", source = "groupId", qualifiedByName = "resolveGroup")
     @Mapping(target = "user", source = "userId", qualifiedByName = "resolveUser")
+    @Mapping(target = "progresses", ignore = true)
     Student toEntity(StudentRequestDto dto);
 
     @Mapping(target = "groupId", source = "group.id")
@@ -23,7 +24,9 @@ public interface StudentMapper {
 
     List<StudentResponseDto> toDtoList(List<Student> students);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "group", source = "groupId", qualifiedByName = "resolveGroup")
     @Mapping(target = "user", source = "userId", qualifiedByName = "resolveUser")
+    @Mapping(target = "progresses", ignore = true)
     void updateStudentFromDto(StudentRequestDto dto, @MappingTarget Student entity);
 }

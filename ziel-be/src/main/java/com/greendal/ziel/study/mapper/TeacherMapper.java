@@ -22,6 +22,7 @@ public interface TeacherMapper {
 
     List<TeacherResponseDto> toDtoList(List<Teacher> teachers);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "user", source = "userId", qualifiedByName = "resolveUser")
     @Mapping(target = "courseTeachers", ignore = true)
     void updateTeacherFromDto(TeacherRequestDto dto, @MappingTarget Teacher entity);

@@ -23,6 +23,7 @@ public interface StudentGroupMapper {
 
     List<StudentGroupResponseDto> toDtoList(List<StudentGroup> groups);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "specialty", source = "specialtyId", qualifiedByName = "resolveSpecialty")
     @Mapping(target = "students", ignore = true)
     @Mapping(target = "courses", ignore = true)

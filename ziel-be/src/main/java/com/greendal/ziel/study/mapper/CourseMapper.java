@@ -16,6 +16,7 @@ public interface CourseMapper {
     @Mapping(target = "courseTeachers", ignore = true)
     @Mapping(target = "studyPlan", source = "studyPlanId", qualifiedByName = "resolveStudyPlan")
     @Mapping(target = "group", source = "groupId", qualifiedByName = "resolveGroup")
+    @Mapping(target = "elements", ignore = true)
     Course toEntity(CourseRequestDto dto);
 
     @Mapping(target = "studyPlanId", source = "studyPlan.id")
@@ -24,8 +25,10 @@ public interface CourseMapper {
 
     List<CourseResponseDto> toDtoList(List<Course> courses);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "courseTeachers", ignore = true)
     @Mapping(target = "studyPlan", source = "studyPlanId", qualifiedByName = "resolveStudyPlan")
     @Mapping(target = "group", source = "groupId", qualifiedByName = "resolveGroup")
+    @Mapping(target = "elements", ignore = true)
     void updateCourseFromDto(CourseRequestDto dto, @MappingTarget Course entity);
 }

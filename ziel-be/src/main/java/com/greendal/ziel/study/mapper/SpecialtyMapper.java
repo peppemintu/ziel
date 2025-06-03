@@ -20,6 +20,7 @@ public interface SpecialtyMapper {
 
     List<SpecialtyResponseDto> toDtoList(List<Specialty> specialties);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "studyPlans", ignore = true)
     @Mapping(target = "groups", ignore = true)
     void updateSpecialtyFromDto(SpecialtyRequestDto dto, @MappingTarget Specialty entity);

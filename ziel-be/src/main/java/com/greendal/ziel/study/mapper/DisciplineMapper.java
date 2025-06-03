@@ -19,6 +19,7 @@ public interface DisciplineMapper {
 
     List<DisciplineResponseDto> toDtoList(List<Discipline> disciplines);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "studyPlans", ignore = true)
     void updateDisciplineFromDto(DisciplineRequestDto dto, @MappingTarget Discipline entity);
 }

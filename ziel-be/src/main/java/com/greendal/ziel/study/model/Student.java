@@ -4,6 +4,8 @@ import com.greendal.ziel.auth.model.User;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "student")
 @Getter
@@ -24,4 +26,7 @@ public class Student {
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "user_id")
     private User user;
+
+    @OneToMany(mappedBy = "student")
+    private List<ElementProgress> progresses;
 }

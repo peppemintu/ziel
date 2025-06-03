@@ -25,6 +25,7 @@ public interface StudyPlanMapper {
 
     List<StudyPlanResponseDto> toDtoList(List<StudyPlan> plans);
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(target = "discipline", source = "disciplineId", qualifiedByName = "resolveDiscipline")
     @Mapping(target = "specialty", source = "specialtyId", qualifiedByName = "resolveSpecialty")
     @Mapping(target = "courses", ignore = true)
