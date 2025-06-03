@@ -19,7 +19,7 @@ public class Element {
     private Long id;
 
     @Column
-    private short hours;
+    private Short hours;
 
     @Column(name = "element_type", nullable = false)
     @Enumerated(EnumType.STRING)

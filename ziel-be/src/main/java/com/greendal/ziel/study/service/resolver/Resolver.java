@@ -19,6 +19,8 @@ public class Resolver {
     private final TeacherRepository teacherRepository;
     private final CourseRepository courseRepository;
     private final UserRepository userRepository;
+    private final ElementRepository elementRepository;
+    private final StudentRepository studentRepository;
 
     @Named("resolveStudyPlan")
     public StudyPlan resolveStudyPlan(Long id) {
@@ -60,5 +62,17 @@ public class Resolver {
     public User resolveUser(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("User not found for id " + id));
+    }
+
+    @Named("resolveStudent")
+    public Student resolveStudent(Long id) {
+        return studentRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Student not found for id " + id));
+    }
+
+    @Named("resolveElement")
+    public Element resolveElement(Long id) {
+        return elementRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Element not found for id " + id));
     }
 }
