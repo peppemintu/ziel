@@ -36,14 +36,14 @@ public class Element {
     @JoinColumn(name = "course_id", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "element")
+    @OneToMany(mappedBy = "element", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElementProgress> studentProgresses;
 
     // this element's children:
-    @OneToMany(mappedBy = "sourceElement")
+    @OneToMany(mappedBy = "sourceElement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElementRelationship> childrenRelationships;
 
     // this element's parents:
-    @OneToMany(mappedBy = "targetElement")
+    @OneToMany(mappedBy = "targetElement", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ElementRelationship> parentRelationships;
 }

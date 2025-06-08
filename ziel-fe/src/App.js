@@ -16,12 +16,12 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import Register from './auth/Register.js'
-import Login from './auth/Login.js'
-import CreateCoursePage from './course/CreateCoursePage.js'
+import Register from './auth/pages/Register.js'
+import Login from './auth/pages/Login.js'
 import StudyPlanPage from './course/StudyPlanPage.jsx'
 import CourseCreationPage from './course/CourseCreationPage.jsx'
-import CoursePage from './course/CoursePage.jsx'
+import CoursePage from './course/pages/CoursePage.jsx'
+import Homepage from './course/pages/Homepage.jsx'
 import AdminLayout from './admin/AdminLayout';
 import DisciplineAdminPage from './admin/DisciplineAdminPage';
 import SpecialtyAdminPage from './admin/SpecialtyAdminPage';
@@ -76,20 +76,16 @@ export default function App() {
                 <ListItemLink to="/login" primary="Login" />
               </ListItem>
               <ListItem disablePadding>
-                <ListItemLink to="/dashboard" primary="Dashboard" />
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemLink to="/courses/new" primary="Create Course" />
+                <ListItemLink to="/" primary="Homepage" />
               </ListItem>
             </List>
           </Box>
         </Drawer>
 
         <Routes>
+          <Route path="/" element={<Homepage />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/courses/new" element={<CreateCoursePage />} />
           <Route path="/plan" element={<StudyPlanPage />} />
           <Route path="/courses/create/:id" element={<CourseCreationPage />} />
           <Route path="/courses/:id" element={<CoursePage />} />
@@ -104,8 +100,4 @@ export default function App() {
       </Box>
     </Router>
   );
-}
-
-function Dashboard() {
-  return <h2>Dashboard</h2>;
 }

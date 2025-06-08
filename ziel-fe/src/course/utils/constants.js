@@ -1,0 +1,33 @@
+export const API_BASE = 'http://localhost:8080/api';
+export const USER_ROLE = 'TEACHER'; // or 'STUDENT'
+export const USER_ID = 1;
+
+export const ELEMENT_TYPES = {
+  LECTURE: 'LECTURE',
+  LABWORK: 'LABWORK',
+  PRACTICE: 'PRACTICE',
+  ATTESTATION: 'ATTESTATION'
+};
+
+export const ATTESTATION_FORMS = {
+  EXAM: 'EXAM',
+  CREDIT: 'CREDIT',
+  QUESTIONING: 'QUESTIONING',
+  REPORT: 'REPORT'
+};
+
+export const PROGRESS_STATUS = {
+  NOT_STARTED: 'NOT_STARTED',
+  IN_PROGRESS: 'IN_PROGRESS',
+  ACCEPTED: 'ACCEPTED',
+  NEEDS_CHANGES: 'NEEDS_CHANGES',
+  OVERDUE: 'OVERDUE'
+};
+
+export const STATUS_COLORS = {
+  NOT_STARTED: '#9e9e9e',
+  IN_PROGRESS: '#ff9800',
+  ACCEPTED: '#4caf50',
+  NEEDS_CHANGES: '#f44336',
+  OVERDUE: '#d32f2f'
+};
