@@ -53,7 +53,7 @@ function TeacherDashboard() {
       </Typography>
 
       {/* Course Creation Widget */}
-      <Paper elevation={3} sx={{ p: 3, mb: 4, background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, background: 'linear-gradient(180deg, #7bbbcd 0%, #48889A 100%)' }}>
         <Box sx={{ color: 'white', textAlign: 'center' }}>
           <SchoolIcon sx={{ fontSize: 60, mb: 2 }} />
           <Typography variant="h5" component="h2" gutterBottom>

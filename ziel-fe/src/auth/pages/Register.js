@@ -11,7 +11,6 @@ import {
     Alert,
     Link
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import { useState } from 'react';
 import { useAuth } from '../hooks/useAuth';
@@ -158,7 +157,7 @@ export default function Register() {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+                <Avatar sx={{ m: 1, bgcolor: '#ADCC7F' }}>
                     <HowToRegOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">

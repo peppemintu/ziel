@@ -1,4 +1,3 @@
-// src/hooks/useCourseCatalog.js
 import { useState, useEffect } from 'react';
 import authAxios from '../../auth/utils/authFetch.js';
 import { useAuth } from '../../auth/hooks/useAuth.js';
@@ -10,11 +9,11 @@ const useCourseCatalog = () => {
   const { user, isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated || !user?.id) return;
 
     const fetchCourseCatalog = async () => {
       try {
-        const courseRes = await authAxios.get(`${API_BASE}/course`);
+        const courseRes = await authAxios.get(`${API_BASE}/course/user/${user.id}`);
         const courseList = await courseRes.data;
 
         const enrichedCourses = await Promise.all(courseList.map(async (course) => {
@@ -32,7 +31,6 @@ const useCourseCatalog = () => {
             courseInfo.specialty = specialtyRes.data;
           } catch (err) {
             console.warn(`Failed to fetch enrichment data for course ${course.id}:`, err.message);
-            // You can optionally continue without enrichment
           }
 
           return courseInfo;
@@ -48,7 +46,7 @@ const useCourseCatalog = () => {
     };
 
     fetchCourseCatalog();
-  }, [isAuthenticated, user?.role]);
+  }, [isAuthenticated, user?.id]);
 
   return { courses, loading };
 };

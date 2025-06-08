@@ -25,6 +25,11 @@ public class CourseController {
         return ResponseEntity.ok(courseService.getCourseById(id));
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<CourseResponseDto>> getCoursesByUserId(@PathVariable Long userId) {
+        return ResponseEntity.ok(courseService.getCoursesByUserId(userId));
+    }
+
     @GetMapping
     public ResponseEntity<List<CourseResponseDto>> getAllCourses() {
         return ResponseEntity.ok(courseService.getAllCourses());

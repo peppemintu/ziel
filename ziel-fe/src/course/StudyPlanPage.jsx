@@ -4,8 +4,8 @@ import {
   MenuItem, Select, TextField, Typography
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import authAxios from '../auth/utils/authFetch.js';
 
 const API_BASE = 'http://localhost:8080/api';
 
@@ -31,27 +31,28 @@ export default function StudyPlanPage() {
   const [form, setForm] = useState(initialForm);
   const navigate = useNavigate();
 
-
-  // Fetch all data once
   useEffect(() => {
     const fetchAll = async () => {
-      const [plansRes, disciplinesRes, specialtiesRes] = await Promise.all([
-        axios.get(`${API_BASE}/plan`),
-        axios.get(`${API_BASE}/discipline`),
-        axios.get(`${API_BASE}/specialty`),
-      ]);
+      try {
+        const [plansRes, disciplinesRes, specialtiesRes] = await Promise.all([
+          authAxios.get(`${API_BASE}/plan`),
+          authAxios.get(`${API_BASE}/discipline`),
+          authAxios.get(`${API_BASE}/specialty`)
+        ]);
 
-      setDisciplines(disciplinesRes.data);
-      setSpecialties(specialtiesRes.data);
+        setDisciplines(disciplinesRes.data);
+        setSpecialties(specialtiesRes.data);
 
-      // Map names directly into plans
-      const mappedPlans = plansRes.data.map(plan => ({
-        ...plan,
-        disciplineName: disciplinesRes.data.find(d => d.id === plan.disciplineId)?.name || 'Unknown',
-        specialtyName: specialtiesRes.data.find(s => s.id === plan.specialtyId)?.name || 'Unknown',
-        id: plan.id,
-      }));
-      setStudyPlans(mappedPlans);
+        const mappedPlans = plansRes.data.map(plan => ({
+          ...plan,
+          disciplineName: disciplinesRes.data.find(d => d.id === plan.disciplineId)?.name || 'Unknown',
+          specialtyName: specialtiesRes.data.find(s => s.id === plan.specialtyId)?.name || 'Unknown',
+          id: plan.id,
+        }));
+        setStudyPlans(mappedPlans);
+      } catch (err) {
+        console.error('Failed to fetch study plan data:', err);
+      }
     };
 
     fetchAll();
@@ -64,8 +65,8 @@ export default function StudyPlanPage() {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${API_BASE}/plan`, form);
-      const createdPlan = response.data; // assuming backend returns the created plan with `id`
+      const response = await authAxios.post(`${API_BASE}/plan`, form);
+      const createdPlan = response.data;
 
       setOpen(false);
       setForm(initialForm);

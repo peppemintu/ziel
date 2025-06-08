@@ -19,6 +19,7 @@ public class UserService {
             throw new UsernameNotFoundException("User not found with email: " + email);
 
         UserResponse userResponse = new UserResponse();
+        userResponse.setId(user.getId());
         userResponse.setEmail(user.getEmail());
         userResponse.setFirstName(user.getFirstName());
         userResponse.setLastName(user.getLastName());

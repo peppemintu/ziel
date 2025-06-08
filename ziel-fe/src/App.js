@@ -7,6 +7,7 @@ import {
   Link,
   useLocation
 } from "react-router-dom";
+import { GlobalStyles } from '@mui/material';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -55,6 +56,18 @@ ListItemLink.propTypes = {
 
 export default function App() {
   return (
+  <>
+    <GlobalStyles
+      styles={{
+        body: {
+          backgroundImage: 'url(/colorfulsky.webp)',
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center center',
+          minHeight: '100vh',
+        },
+      }}
+    />
     <Router>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -99,5 +112,6 @@ export default function App() {
         </Routes>
       </Box>
     </Router>
+  </>
   );
 }

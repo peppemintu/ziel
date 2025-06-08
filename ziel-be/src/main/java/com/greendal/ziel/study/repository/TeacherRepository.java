@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TeacherRepository extends ListCrudRepository<Teacher, Long> {
+    Teacher findByUserId(Long userId);
 }
