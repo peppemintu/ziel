@@ -35,6 +35,10 @@ public class ElementService {
         return planMapper.toDtoList(planRepository.findAll());
     }
 
+    public List<ElementResponseDto> getElementsByCourseId(Long courseId) {
+        return planMapper.toDtoList(planRepository.findByCourseId(courseId));
+    }
+
     public ElementResponseDto updateElement(Long id, ElementRequestDto dto) {
         Element existing = planRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Element not found with id " + id));

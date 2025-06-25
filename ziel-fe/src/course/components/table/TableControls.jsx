@@ -15,12 +15,12 @@ const TableControls = ({
 }) => {
   return (
     <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 2 }}>
-      <Typography variant="h5">Course Elements</Typography>
+      <Typography variant="h5">Элементы</Typography>
       <Box sx={{ display: 'flex', gap: 2 }}>
         <FormControl size="small" sx={{ minWidth: 120 }}>
-          <InputLabel>Filter</InputLabel>
+          <InputLabel>Фильтр</InputLabel>
           <Select value={filterType} onChange={(e) => onFilterChange(e.target.value)} label="Filter">
-            <MenuItem value="">All Types</MenuItem>
+            <MenuItem value="">Все типы</MenuItem>
             {Object.keys(ELEMENT_TYPES).map(type => (
               <MenuItem key={type} value={type}>{type}</MenuItem>
             ))}
@@ -31,18 +31,18 @@ const TableControls = ({
           size="small"
           onClick={onExpandAll}
         >
-          Expand All
+          Раскрыть всё
         </Button>
         <Button
           variant="outlined"
           size="small"
           onClick={onCollapseAll}
         >
-          Collapse All
+          Свернуть всё
         </Button>
         {userRole === 'TEACHER' && (
           <Button variant="contained" startIcon={<AddIcon />} onClick={onAddElement}>
-            Add Element
+            Добавить элемент
           </Button>
         )}
       </Box>

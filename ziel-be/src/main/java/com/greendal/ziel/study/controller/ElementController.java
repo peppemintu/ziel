@@ -25,6 +25,11 @@ public class ElementController {
         return ResponseEntity.ok(elementService.getElementById(id));
     }
 
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<ElementResponseDto>> getElementsByCourseId(@PathVariable Long courseId) {
+        return ResponseEntity.ok(elementService.getElementsByCourseId(courseId));
+    }
+
     @GetMapping
     public ResponseEntity<List<ElementResponseDto>> getAllElements() {
         return ResponseEntity.ok(elementService.getAllElements());

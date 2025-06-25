@@ -35,6 +35,10 @@ public class ElementProgressService {
         return planMapper.toDtoList(planRepository.findAll());
     }
 
+    public List<ElementProgressResponseDto> getProgressesByElement(Long elementId) {
+        return planMapper.toDtoList(planRepository.findByElementId(elementId));
+    }
+
     public ElementProgressResponseDto updateElementProgress(Long id, ElementProgressRequestDto dto) {
         ElementProgress existing = planRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("ElementProgress not found with id " + id));

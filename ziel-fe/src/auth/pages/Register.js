@@ -9,30 +9,38 @@ import {
     CssBaseline,
     Avatar,
     Alert,
-    Link
+    Link,
+    Select,
+    MenuItem,
+    FormControl,
+    InputLabel,
+    FormHelperText
 } from '@mui/material';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import DynamicFormField from '../components/common/DynamicFormField';
+import authAxios from '../utils/authFetch';
 
 export default function Register() {
     const { register, isLoading, error } = useAuth();
     const navigate = useNavigate();
+    const [specialties, setSpecialties] = useState([]);
+    const [loadingSpecialties, setLoadingSpecialties] = useState(false);
 
     const formConfig = {
         email: {
             type: "text",
-            label: "Email Address",
+            label: "Email",
             required: true,
             validator: (val) =>
                 /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(val.trim()),
-            autoComplete: "email"
+            autoComplete: "email@gmail.com"
         },
         password: {
             type: "password",
-            label: "Password",
+            label: "Пароль",
             required: true,
             validator: (val) => val.length >= 8,
             helperText: "Must be at least 8 characters",
@@ -40,56 +48,88 @@ export default function Register() {
         },
         confirmPassword: {
             type: "password",
-            label: "Confirm Password",
+            label: "Подтвердите пароль",
             required: true,
             validator: (val) => val === formData.password,
             helperText: "Passwords must match"
         },
         firstName: {
             type: "text",
-            label: "First Name",
+            label: "Имя",
             required: true,
-            autoComplete: "given-name"
+            autoComplete: "Иван"
         },
         lastName: {
             type: "text",
-            label: "Last Name",
+            label: "Фамилия",
             required: true,
-            autoComplete: "family-name"
+            autoComplete: "Иванов"
         },
         patronymic: {
             type: "text",
-            label: "Patronymic",
-            autoComplete: "additional-name"
+            label: "Отчество",
+            autoComplete: "Иванович"
         },
         role: {
             type: "select",
-            label: "Role",
+            label: "Роль",
             required: true,
             options: [
-                { value: "STUDENT", label: "Student" },
-                { value: "TEACHER", label: "Teacher" },
-                { value: "ADMIN", label: "Admin" },
+                { value: "STUDENT", label: "Студент" },
+                { value: "TEACHER", label: "Преподаватель" },
             ],
         },
+        groupNumber: {
+            type: "text",
+            label: "Номер группы",
+            required: true,
+            showIf: (formData) => formData.role === "STUDENT"
+        }
     };
 
     const [formData, setFormData] = useState({
         email: "",
         password: "",
+        confirmPassword: "",
         firstName: "",
         lastName: "",
         patronymic: "",
         role: "",
+        specialtyId: "",
+        groupNumber: ""
     });
 
     const [fieldErrors, setFieldErrors] = useState({
         email: "",
         password: "",
+        confirmPassword: "",
         firstName: "",
         lastName: "",
-        role: ""
+        role: "",
+        specialtyId: "",
+        groupNumber: ""
     });
+
+    useEffect(() => {
+        const fetchSpecialties = async () => {
+            setLoadingSpecialties(true);
+            try {
+                const response = await fetch('http://localhost:8080/api/specialty');
+                if (response.ok) {
+                    const data = await response.json();
+                    setSpecialties(data);
+                } else {
+                    console.error('Failed to fetch specialties');
+                }
+            } catch (error) {
+                console.error('Error fetching specialties:', error);
+            } finally {
+                setLoadingSpecialties(false);
+            }
+        };
+
+        fetchSpecialties();
+    }, []);
 
     const handleFieldChange = (field, value) => {
         setFormData(prev => ({
@@ -97,11 +137,23 @@ export default function Register() {
             [field]: value,
         }));
 
-        // Clear error when user types
         if (fieldErrors[field]) {
             setFieldErrors(prev => ({
                 ...prev,
                 [field]: ""
+            }));
+        }
+
+        if (field === 'role' && value !== 'STUDENT') {
+            setFormData(prev => ({
+                ...prev,
+                specialtyId: "",
+                groupNumber: ""
+            }));
+            setFieldErrors(prev => ({
+                ...prev,
+                specialtyId: "",
+                groupNumber: ""
             }));
         }
     };
@@ -111,12 +163,28 @@ export default function Register() {
         const newErrors = {};
 
         Object.keys(formConfig).forEach(key => {
+            const field = formConfig[key];
+
+            if (field.showIf && !field.showIf(formData)) return;
+
             const error = getValidationError(key, formData[key]);
             if (error) {
                 newErrors[key] = error;
                 isValid = false;
             }
         });
+
+
+        if (formData.role === "STUDENT") {
+            if (!formData.specialtyId) {
+                newErrors.specialtyId = "Specialty is required for students";
+                isValid = false;
+            }
+            if (!formData.groupNumber.trim()) {
+                newErrors.groupNumber = "Group number is required for students";
+                isValid = false;
+            }
+        }
 
         setFieldErrors(newErrors);
         return isValid;
@@ -128,10 +196,60 @@ export default function Register() {
         if (field.validator && !field.validator(value)) {
             if (key === 'email') return "Please enter a valid email address";
             if (key === 'password') return "Password must be at least 8 characters";
+            if (key === 'confirmPassword') return "Passwords must match";
             return "Invalid value";
         }
         return "";
     };
+
+    const createStudentEntry = async (userId) => {
+        try {
+             const { specialtyId, groupNumber } = formData;
+             const parsedGroupNumber = parseInt(groupNumber.trim());
+
+
+             const allGroupsResponse = await authAxios.get('http://localhost:8080/api/student-group');
+             const allGroups = allGroupsResponse.data;
+
+
+             let existingGroup = allGroups.find(
+                 group =>
+                     group.specialtyId === specialtyId &&
+                     group.groupNumber === parsedGroupNumber
+             );
+
+             let groupId;
+
+             if (existingGroup) {
+
+                 groupId = existingGroup.id;
+             } else {
+
+                 const groupData = {
+                     specialtyId,
+                     groupNumber: parsedGroupNumber
+                 };
+
+                 const groupResponse = await authAxios.post('http://localhost:8080/api/student-group', groupData);
+                 groupId = groupResponse.data.id;
+             }
+
+             const studentData = {
+                userId,
+                groupId
+             };
+
+             const studentResponse = await authAxios.post('http://localhost:8080/api/student', studentData);
+             if (!studentResponse.ok) {
+                throw new Error('Failed to create student entry');
+             }
+             return studentResponse.data;
+        } catch (error) {
+            console.error('Error creating student entry:', error);
+            throw error;
+        }
+    };
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -139,11 +257,56 @@ export default function Register() {
         if (!validateForm()) return;
 
         try {
-            await register(formData);
-            navigate('/login'); // Redirect to login after successful registration
+
+            const registrationResult = await register(formData);
+            console.log(registrationResult);
+
+
+            if (formData.role === "STUDENT" && formData.specialtyId && formData.groupNumber.trim()) {
+                try {
+                    await createStudentEntry(registrationResult.userId || registrationResult.id);
+                } catch (studentError) {
+
+                    console.error('Failed to create student entry:', studentError);
+
+                }
+            }
+
+            navigate('/');
         } catch (err) {
             // Error is already handled in the useAuth hook
         }
+    };
+
+    const renderSpecialtyField = () => {
+        if (formData.role !== "STUDENT") return null;
+
+        return (
+            <FormControl fullWidth error={!!fieldErrors.specialtyId}>
+                <InputLabel id="specialty-label">Специальность</InputLabel>
+                <Select
+                    labelId="specialty-label"
+                    id="specialtyId"
+                    name="specialtyId"
+                    value={formData.specialtyId}
+                    label="Специальность"
+                    onChange={(e) => handleFieldChange('specialtyId', e.target.value)}
+                    disabled={loadingSpecialties}
+                >
+                    <MenuItem value="" disabled>
+                        {loadingSpecialties ? "Загрузка..." : "Выберите специальность"}
+                    </MenuItem>
+                    {specialties.map(specialty => (
+                        <MenuItem key={specialty.id} value={specialty.id}>
+                            {specialty.name}
+                        </MenuItem>
+                    ))}
+                </Select>
+                {fieldErrors.specialtyId && (
+                    <FormHelperText>{fieldErrors.specialtyId}</FormHelperText>
+                )}
+            </FormControl>
+        );
     };
 
     return (
@@ -161,7 +324,7 @@ export default function Register() {
                     <HowToRegOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Create an account
+                    Регистрация
                 </Typography>
 
                 {error && (
@@ -178,16 +341,25 @@ export default function Register() {
                 >
                     <Paper elevation={3} sx={{ p: 4 }}>
                         <Stack spacing={3}>
-                            {Object.keys(formConfig).map((key) => (
-                                <DynamicFormField
-                                    key={key}
-                                    id={key}
-                                    config={formConfig[key]}
-                                    value={formData[key]}
-                                    onChange={handleFieldChange}
-                                    error={fieldErrors[key]}
-                                />
-                            ))}
+                            {Object.keys(formConfig).map((key) => {
+                                const field = formConfig[key];
+
+                                if (field.showIf && !field.showIf(formData)) return null;
+
+                                return (
+                                    <DynamicFormField
+                                        key={key}
+                                        id={key}
+                                        config={field}
+                                        value={formData[key]}
+                                        onChange={handleFieldChange}
+                                        error={fieldErrors[key]}
+                                    />
+                                );
+                            })}
+
+                            {/* Specialty field for students */}
+                            {renderSpecialtyField()}
 
                             <Button
                                 type="submit"
@@ -199,13 +371,13 @@ export default function Register() {
                                 {isLoading ? (
                                     <CircularProgress size={24} color="inherit" />
                                 ) : (
-                                    "Sign Up"
+                                    "Зарегистрироваться"
                                 )}
                             </Button>
 
                             <Box sx={{ textAlign: 'center' }}>
                                 <Link href="/login" variant="body2">
-                                    Already have an account? Sign in
+                                    Уже есть аккаунт? Войдите
                                 </Link>
                             </Box>
                         </Stack>

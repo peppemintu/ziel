@@ -45,8 +45,8 @@ export default function StudyPlanPage() {
 
         const mappedPlans = plansRes.data.map(plan => ({
           ...plan,
-          disciplineName: disciplinesRes.data.find(d => d.id === plan.disciplineId)?.name || 'Unknown',
-          specialtyName: specialtiesRes.data.find(s => s.id === plan.specialtyId)?.name || 'Unknown',
+          disciplineName: disciplinesRes.data.find(d => d.id === plan.disciplineId)?.name || 'Неизвестно',
+          specialtyName: specialtiesRes.data.find(s => s.id === plan.specialtyId)?.name || 'Неизвестно',
           id: plan.id,
         }));
         setStudyPlans(mappedPlans);
@@ -71,8 +71,8 @@ export default function StudyPlanPage() {
       setOpen(false);
       setForm(initialForm);
 
-      const disciplineName = disciplines.find(d => d.id === +form.disciplineId)?.name || 'Unknown';
-      const specialtyName = specialties.find(s => s.id === +form.specialtyId)?.name || 'Unknown';
+      const disciplineName = disciplines.find(d => d.id === +form.disciplineId)?.name || 'Неизвестно';
+      const specialtyName = specialties.find(s => s.id === +form.specialtyId)?.name || 'Неизвестно';
 
       const newPlan = {
         ...createdPlan,
@@ -94,21 +94,26 @@ export default function StudyPlanPage() {
     }
   };
 
+  const fieldLabels = {
+    studyYear: 'Курс обучения',
+    semester: 'Семестр',
+    totalHours: 'Общее количество часов',
+    creditUnits: 'Зачетные единицы',
+    totalAuditoryHours: 'Общие аудиторные часы',
+    lectureHours: 'Часы лекций',
+    practiceHours: 'Часы практики',
+    labHours: 'Часы лабораторных'
+  };
+
   const columns = [
-    { field: 'studyYear', headerName: 'Year', width: 100 },
-    { field: 'semester', headerName: 'Semester', width: 100 },
-    { field: 'totalHours', headerName: 'Total Hours', width: 130 },
-    { field: 'creditUnits', headerName: 'Credits', width: 100 },
-    { field: 'totalAuditoryHours', headerName: 'Auditory Hours', width: 150 },
-    { field: 'lectureHours', headerName: 'Lecture Hours', width: 130 },
-    { field: 'practiceHours', headerName: 'Practice Hours', width: 130 },
-    { field: 'labHours', headerName: 'Lab Hours', width: 100 },
-    { field: 'attestationForm', headerName: 'Attestation', width: 130 },
-    { field: 'disciplineName', headerName: 'Discipline', width: 200 },
-    { field: 'specialtyName', headerName: 'Specialty', width: 200 },
+    { field: 'studyYear', headerName: 'Курс', width: 100 },
+    { field: 'semester', headerName: 'Семестр', width: 100 },
+    { field: 'attestationForm', headerName: 'Аттестация', width: 130 },
+    { field: 'disciplineName', headerName: 'Дисциплина', width: 200 },
+    { field: 'specialtyName', headerName: 'Специальность', width: 250 },
     {
       field: 'createCourse',
-      headerName: 'Create Course',
+      headerName: 'Создать курс',
       width: 150,
       renderCell: (params) => (
         <Button
@@ -116,7 +121,7 @@ export default function StudyPlanPage() {
           size="small"
           onClick={() => navigate(`/courses/create/${params.row.id}`, { state: { studyPlan: params.row } })}
         >
-          Create Course
+          Создать курс
         </Button>
       ),
     }
@@ -125,11 +130,11 @@ export default function StudyPlanPage() {
   return (
     <Box p={4}>
       <Typography variant="h4" gutterBottom>
-        Study Plans
+        Учебные планы
       </Typography>
 
       <Button variant="contained" color="primary" onClick={() => setOpen(true)}>
-        Add Study Plan
+        Добавить учебный план
       </Button>
 
       <Box mt={3} style={{ height: 600, width: '100%' }}>
@@ -144,7 +149,7 @@ export default function StudyPlanPage() {
       </Box>
 
       <Dialog open={open} onClose={() => setOpen(false)} maxWidth="sm" fullWidth>
-        <DialogTitle>Create Study Plan</DialogTitle>
+        <DialogTitle>Создать учебный план</DialogTitle>
         <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
           {[
             'studyYear', 'semester', 'totalHours', 'creditUnits',
@@ -153,7 +158,7 @@ export default function StudyPlanPage() {
             <TextField
               key={field}
               name={field}
-              label={field}
+              label={fieldLabels[field]}
               value={form[field]}
               onChange={handleChange}
               type="number"
@@ -167,8 +172,8 @@ export default function StudyPlanPage() {
             onChange={handleChange}
             fullWidth
           >
-            <MenuItem value="EXAM">Exam</MenuItem>
-            <MenuItem value="CREDIT">Credit</MenuItem>
+            <MenuItem value="EXAM">Экзамен</MenuItem>
+            <MenuItem value="CREDIT">Зачет</MenuItem>
           </Select>
 
           <Select
@@ -178,7 +183,7 @@ export default function StudyPlanPage() {
             displayEmpty
             fullWidth
           >
-            <MenuItem value="" disabled>Select Discipline</MenuItem>
+            <MenuItem value="" disabled>Выберите дисциплину</MenuItem>
             {disciplines.map(d => (
               <MenuItem key={d.id} value={d.id}>{d.name}</MenuItem>
             ))}
@@ -191,15 +196,15 @@ export default function StudyPlanPage() {
             displayEmpty
             fullWidth
           >
-            <MenuItem value="" disabled>Select Specialty</MenuItem>
+            <MenuItem value="" disabled>Выберите специальность</MenuItem>
             {specialties.map(s => (
               <MenuItem key={s.id} value={s.id}>{s.name}</MenuItem>
             ))}
           </Select>
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => setOpen(false)}>Cancel</Button>
-          <Button onClick={handleSubmit} variant="contained">Save</Button>
+          <Button onClick={() => setOpen(false)}>Отмена</Button>
+          <Button onClick={handleSubmit} variant="contained">Сохранить</Button>
         </DialogActions>
       </Dialog>
     </Box>

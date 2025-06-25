@@ -30,6 +30,11 @@ public class ElementProgressController {
         return ResponseEntity.ok(elementProgressService.getAllElementProgresss());
     }
 
+    @GetMapping("/element/{elementId}")
+    public ResponseEntity<List<ElementProgressResponseDto>> getProgressesByElementId(@PathVariable Long elementId) {
+        return ResponseEntity.ok(elementProgressService.getProgressesByElement(elementId));
+    }
+
     @PutMapping("/{id}")
     public ResponseEntity<ElementProgressResponseDto> updateElementProgress(@PathVariable Long id,
                                                                   @RequestBody ElementProgressRequestDto dto) {

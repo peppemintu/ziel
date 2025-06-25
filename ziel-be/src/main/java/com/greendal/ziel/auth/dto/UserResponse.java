@@ -1,15 +1,13 @@
 package com.greendal.ziel.auth.dto;
 
 import com.greendal.ziel.auth.model.Role;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserResponse {
     private Long id;
     private String email;

@@ -18,6 +18,12 @@ public class Element {
     @Column(name = "course_element_id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private String description;
+
     @Column
     private Short hours;
 

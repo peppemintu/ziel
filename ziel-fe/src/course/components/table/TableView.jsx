@@ -35,7 +35,6 @@ const TableView = ({
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates })
   );
 
-  // Build nested structure and apply filters
   useEffect(() => {
     let nested = buildNestedStructure(elements, relationships);
 
@@ -47,7 +46,6 @@ const TableView = ({
       });
     }
 
-    // Apply collapse/expand logic
     const visibleElements = [];
     const processElement = (element, parentCollapsed = false) => {
       if (!parentCollapsed) {
@@ -98,7 +96,6 @@ const TableView = ({
 
     if (!activeElement || !overElement) return;
 
-    // Prevent dropping parent onto its own descendant
     const isDescendant = (parent, child) => {
       if (!parent.children) return false;
       return parent.children.some(c => c.id === child.id || isDescendant(c, child));
@@ -108,7 +105,6 @@ const TableView = ({
       return;
     }
 
-    // Prevent lecture-to-lecture or lecture-to-attestation relationships
     if (overElement.elementType === 'LECTURE' && activeElement.elementType === 'LECTURE') {
       console.warn('Cannot create lecture-to-lecture relationship');
       return;
@@ -152,12 +148,12 @@ const TableView = ({
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Type</TableCell>
-                <TableCell>Hours</TableCell>
-                <TableCell>Attestation Form</TableCell>
-                <TableCell>Grade</TableCell>
-                {userRole === 'STUDENT' && <TableCell>Status</TableCell>}
-                <TableCell align="right">Actions</TableCell>
+                <TableCell>Тип</TableCell>
+                <TableCell>Тема</TableCell>
+                <TableCell>Часов</TableCell>
+                <TableCell>Форма аттестации</TableCell>
+                {userRole === 'STUDENT' && <TableCell align="right">Статус</TableCell>}
+                {userRole === 'TEACHER' && <TableCell align="right">Действия</TableCell>}
               </TableRow>
             </TableHead>
             <TableBody>
@@ -190,13 +186,6 @@ const TableView = ({
         }}
         onSave={handleElementSave}
         element={editingElement}
-      />
-
-      <FileUploadDialog
-        open={uploadDialogOpen}
-        onClose={() => setUploadDialogOpen(false)}
-        onUpload={onFileUpload}
-        elementId={selectedElementId}
       />
     </Box>
   );

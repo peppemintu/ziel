@@ -25,7 +25,6 @@ export default function CourseElementTable() {
     attestationForm: 'EXAM',
   });
 
-  // Fetch elements by courseId
   useEffect(() => {
     const fetchElements = async () => {
       const res = await axios.get(`${API_BASE}/element`);

@@ -1,5 +1,6 @@
 package com.greendal.ziel.auth.model;
 
+import com.greendal.ziel.study.model.File;
 import com.greendal.ziel.study.model.Student;
 import com.greendal.ziel.study.model.Teacher;
 import jakarta.persistence.*;

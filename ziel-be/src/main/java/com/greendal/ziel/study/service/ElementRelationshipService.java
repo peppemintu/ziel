@@ -35,6 +35,10 @@ public class ElementRelationshipService {
         return planMapper.toDtoList(planRepository.findAll());
     }
 
+    public List<ElementRelationshipResponseDto> getElementRelationshipsByCourseId(Long courseId) {
+        return planMapper.toDtoList(planRepository.findBySourceElement_Course_Id(courseId));
+    }
+
     public ElementRelationshipResponseDto updateElementRelationship(Long id, ElementRelationshipRequestDto dto) {
         ElementRelationship existing = planRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("ElementRelationship not found with id " + id));

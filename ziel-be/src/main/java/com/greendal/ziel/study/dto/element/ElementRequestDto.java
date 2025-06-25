@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ElementRequestDto {
+    private String name;
+    private String description;
     private Short hours;
     private ElementType elementType;
     private AttestationForm attestationForm;

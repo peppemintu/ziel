@@ -2,6 +2,8 @@ package com.greendal.ziel.auth.service;
 
 import com.greendal.ziel.auth.dto.AuthRequest;
 import com.greendal.ziel.auth.dto.RegisterRequest;
+import com.greendal.ziel.auth.dto.RegisterResponse;
+import com.greendal.ziel.auth.dto.UserResponse;
 import com.greendal.ziel.auth.model.User;
 import com.greendal.ziel.auth.repository.UserRepository;
 import com.greendal.ziel.auth.util.JwtTokenUtil;
@@ -72,7 +74,7 @@ public class AuthService {
         setAuthCookies(response, tokens.get("accessToken"), tokens.get("refreshToken"));
     }
 
-    public void register(RegisterRequest registerRequest, HttpServletResponse response) {
+    public RegisterResponse register(RegisterRequest registerRequest, HttpServletResponse response) {
         User newUser = new User();
         newUser.setEmail(registerRequest.getEmail());
         newUser.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
@@ -81,12 +83,22 @@ public class AuthService {
         newUser.setPatronymic(registerRequest.getPatronymic());
         newUser.setRole(registerRequest.getRole());
 
-        userRepository.save(newUser);
+        User createdUser = userRepository.save(newUser);
+        RegisterResponse registerResponse = RegisterResponse.builder()
+                .id(createdUser.getId())
+                .email(createdUser.getEmail())
+                .firstName(createdUser.getFirstName())
+                .lastName(createdUser.getLastName())
+                .patronymic(createdUser.getPatronymic())
+                .role(createdUser.getRole())
+                .build();
 
         Map<String, String> tokens =
                 generateTokens(newUser.getEmail());
 
         setAuthCookies(response, tokens.get("accessToken"), tokens.get("refreshToken"));
+
+        return registerResponse;
     }
 
     private Map<String, String> generateTokens(String email) {

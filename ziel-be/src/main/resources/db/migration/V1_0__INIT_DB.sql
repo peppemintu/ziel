@@ -114,6 +114,8 @@ CREATE TABLE IF NOT EXISTS final_grade (
 CREATE TABLE IF NOT EXISTS course_element (
     course_element_id     BIGSERIAL PRIMARY KEY,
     course_id             BIGINT NOT NULL REFERENCES course(course_id),
+    name                  VARCHAR(255) NOT NULL,
+    description           VARCHAR(255) NOT NULL,
     hours                 SMALLINT NOT NULL,
     is_published          BOOLEAN NOT NULL DEFAULT false,
     element_type          element_type_enum NOT NULL,
@@ -134,13 +136,8 @@ CREATE TABLE IF NOT EXISTS file (
     file_id               BIGSERIAL PRIMARY KEY,
     path                  VARCHAR(255) NOT NULL,
     name                  VARCHAR(255) NOT NULL,
-    uploaded_at           TIMESTAMP NOT NULL
-);
-
--- Methodical Material
-CREATE TABLE IF NOT EXISTS methodical_material (
-    material_id           BIGSERIAL PRIMARY KEY,
-    file_id               BIGINT NOT NULL REFERENCES file(file_id),
+    uploaded_at           TIMESTAMP NOT NULL,
+    uploaded_by           BIGINT NOT NULL REFERENCES usr(user_id),
     course_element_id     BIGINT NOT NULL REFERENCES course_element(course_element_id)
 );
 
@@ -152,19 +149,6 @@ CREATE TABLE IF NOT EXISTS message (
     status                message_status_enum NOT NULL,
     user_id               BIGINT NOT NULL REFERENCES usr(user_id),
     course_element_id     BIGINT NOT NULL REFERENCES course_element(course_element_id)
-);
-
--- Message Reply
-CREATE TABLE IF NOT EXISTS message_reply (
-    reply_id              BIGSERIAL PRIMARY KEY,
-    parent_message_id     BIGINT NOT NULL REFERENCES message(message_id)
-);
-
--- Report
-CREATE TABLE IF NOT EXISTS report (
-    report_id             BIGSERIAL PRIMARY KEY,
-    message_id            BIGINT NOT NULL REFERENCES message(message_id),
-    file_id               BIGINT NOT NULL REFERENCES file(file_id)
 );
 
 -- Course Manager

@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ElementResponseDto {
     private Long id;
+    private String name;
+    private String description;
     private Short hours;
     private ElementType elementType;
     private AttestationForm attestationForm;

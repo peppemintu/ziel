@@ -6,26 +6,24 @@ import ElementIcon from '../common/ElementIcon';
 import RoadmapLegend from './RoadmapLegend';
 import StatusLegend from './StatusLegend';
 import { getStatusColor } from '../../utils/statusUtils';
+import { ELEMENT_TYPES_LABELS, ATTESTATION_FORMS_LABELS } from '../../utils/translations.js';
 
 const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementClick, userRole }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   const createNodesAndEdges = useCallback(() => {
-    // Separate elements by type
     const lectures = elements.filter(el => el.elementType === 'LECTURE');
     const attestations = elements.filter(el => el.elementType === 'ATTESTATION');
     const practices = elements.filter(el => el.elementType === 'PRACTICE');
     const labworks = elements.filter(el => el.elementType === 'LABWORK');
 
-    // Sort each type by hours or another logical order
     const sortByHours = (a, b) => a.hours - b.hours;
     lectures.sort(sortByHours);
     attestations.sort(sortByHours);
     practices.sort(sortByHours);
     labworks.sort(sortByHours);
 
-    // Calculate positions
     const nodeSpacing = 330; // Horizontal spacing between nodes
     const verticalSpacing = 180; // Vertical spacing between rows
     const centerY = 300; // Center line for lectures and attestations
@@ -35,21 +33,17 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
     const nodeElements = [];
     let currentX = 50; // Starting X position
 
-    // Create a combined sequence of lectures and attestations for the main horizontal line
     const mainSequence = [];
 
-    // Interleave lectures and attestations based on logical flow
     let lectureIndex = 0;
     let attestationIndex = 0;
 
     while (lectureIndex < lectures.length || attestationIndex < attestations.length) {
-      // Add lectures first (usually come before assessments)
       if (lectureIndex < lectures.length) {
         mainSequence.push(lectures[lectureIndex]);
         lectureIndex++;
       }
 
-      // Add attestation after every 2-3 lectures, or at the end
       if (attestationIndex < attestations.length &&
           (lectureIndex % 3 === 0 || lectureIndex >= lectures.length)) {
         mainSequence.push(attestations[attestationIndex]);
@@ -57,7 +51,6 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
       }
     }
 
-    // Position main sequence (lectures and attestations) horizontally
     mainSequence.forEach((element, index) => {
       const status = element.progressStatus || 'NOT_STARTED';
       nodeElements.push({
@@ -71,13 +64,10 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
                 <ElementIcon type={element.elementType} />
               </Box>
               <Typography variant="body2" fontWeight="bold">
-                {element.hours} hours
+                {element.name}
               </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {element.elementType}
-              </Typography>
-              <Typography variant="caption" display="block" color="textSecondary">
-                {element.attestationForm}
+              <Typography variant="body2" fontWeight="bold">
+                {element.hours} часа
               </Typography>
             </Box>
           )
@@ -94,14 +84,11 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
       });
     });
 
-    // Position practices above the main line
     practices.forEach((element, index) => {
       const status = element.progressStatus || 'NOT_STARTED';
 
-      // Find the best X position based on related lectures/attestations
       let xPosition = currentX + (index * nodeSpacing);
 
-      // Try to align with related elements if relationships exist
       const relatedElement = relationships.find(rel =>
         rel.targetElementId === element.id || rel.sourceElementId === element.id
       );
@@ -127,13 +114,13 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
                 <ElementIcon type={element.elementType} />
               </Box>
               <Typography variant="body2" fontWeight="bold">
-                {element.hours} hours
+                {element.name}
               </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {element.elementType}
+              <Typography variant="body2" fontWeight="bold">
+                {element.hours} часа
               </Typography>
               <Typography variant="caption" display="block" color="textSecondary">
-                {element.attestationForm}
+                {ATTESTATION_FORMS_LABELS[element.attestationForm] || element.attestationForm}
               </Typography>
             </Box>
           )
@@ -150,14 +137,11 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
       });
     });
 
-    // Position labworks below the main line
     labworks.forEach((element, index) => {
       const status = element.progressStatus || 'NOT_STARTED';
 
-      // Find the best X position based on related lectures/attestations
       let xPosition = currentX + (index * nodeSpacing);
 
-      // Try to align with related elements if relationships exist
       const relatedElement = relationships.find(rel =>
         rel.targetElementId === element.id || rel.sourceElementId === element.id
       );
@@ -183,13 +167,13 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
                 <ElementIcon type={element.elementType} />
               </Box>
               <Typography variant="body2" fontWeight="bold">
-                {element.hours} hours
+                {element.name}
               </Typography>
-              <Typography variant="caption" color="textSecondary">
-                {element.elementType}
+              <Typography variant="body2" fontWeight="bold">
+                {element.hours} часа
               </Typography>
               <Typography variant="caption" display="block" color="textSecondary">
-                {element.attestationForm}
+                {ATTESTATION_FORMS_LABELS[element.attestationForm] || element.attestationForm}
               </Typography>
             </Box>
           )
@@ -206,7 +190,6 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
       });
     });
 
-    // Adjust positions to prevent overlaps
     const adjustOverlaps = (nodes) => {
       const positionMap = new Map();
 
@@ -218,13 +201,11 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
         positionMap.get(key).push(node);
       });
 
-      // Adjust overlapping nodes
       positionMap.forEach((overlappingNodes, position) => {
         if (overlappingNodes.length > 1) {
           overlappingNodes.forEach((node, index) => {
             if (index > 0) {
-              // Offset overlapping nodes slightly
-              node.position.x += (index * 220);
+              node.position.x += (index * 250);
             }
           });
         }
@@ -235,7 +216,6 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
 
     const adjustedNodes = adjustOverlaps(nodeElements);
 
-    // Create edges with better positioning
     const edgeElements = relationships.map((rel, index) => {
       const sourceNode = adjustedNodes.find(node => node.id === rel.sourceElementId.toString());
       const targetNode = adjustedNodes.find(node => node.id === rel.targetElementId.toString());
@@ -243,14 +223,11 @@ const RoadmapView = ({ elements, relationships, onConnectionCreate, onElementCli
       let edgeType = 'smoothstep';
       let edgeStyle = { stroke: '#666', strokeWidth: 2 };
 
-      // Different styling based on relationship type
       if (sourceNode && targetNode) {
-        // Vertical connections (between different rows)
         if (Math.abs(sourceNode.position.y - targetNode.position.y) > 100) {
           edgeStyle.stroke = '#ff9800';
           edgeStyle.strokeDasharray = '5,5';
         }
-        // Horizontal connections (same row)
         else {
           edgeStyle.stroke = '#2196f3';
         }

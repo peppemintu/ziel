@@ -1,10 +1,10 @@
 import { useState, useCallback } from 'react';
-import authAxios from '../../auth/utils/authFetch'; // ✅ import authenticated axios
+import authAxios from '../../auth/utils/authFetch';
 import { API_BASE } from '../utils/constants';
-import { useAuth } from '../../auth/hooks/useAuth'; // ✅ import user info
+import { useAuth } from '../../auth/hooks/useAuth';
 
 const useApi = (courseId, userRole) => {
-  const { user } = useAuth(); // ✅ get user ID from real auth context
+  const { user } = useAuth();
 
   const [data, setData] = useState({
     course: null,
@@ -32,8 +32,8 @@ const useApi = (courseId, userRole) => {
       const courseData = courseRes.data;
 
       const fetchPromises = [
-        authAxios.get(`${API_BASE}/element?courseId=${courseId}`),
-        authAxios.get(`${API_BASE}/relationship?courseId=${courseId}`)
+        authAxios.get(`${API_BASE}/element/course/${courseId}`),
+        authAxios.get(`${API_BASE}/relationship/course/${courseId}`)
       ];
 
       if (courseData.studyPlanId) {
@@ -90,7 +90,12 @@ const useApi = (courseId, userRole) => {
     try {
       const response = await authAxios({
         url: `${API_BASE}${url}`,
-        ...options
+        ...options,
+        headers: {
+          ...(options.headers || {}),
+          // Only add content-type if it's not FormData (browser handles that)
+          ...(options.data instanceof FormData ? {} : { 'Content-Type': 'application/json' })
+        }
       });
 
       if (response.status >= 200 && response.status < 300) {
@@ -108,7 +113,6 @@ const useApi = (courseId, userRole) => {
   const handleElementAdd = async (formData) => {
     const success = await apiCall('/element', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       data: { ...formData, courseId: parseInt(courseId) }
     });
     showSnackbar(success ? 'Element added successfully' : 'Error adding element', success ? 'success' : 'error');
@@ -117,7 +121,6 @@ const useApi = (courseId, userRole) => {
   const handleElementEdit = async (updatedElement) => {
     const success = await apiCall(`/element/${updatedElement.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
       data: updatedElement
     });
     showSnackbar(success ? 'Element updated successfully' : 'Error updating element', success ? 'success' : 'error');
@@ -128,17 +131,15 @@ const useApi = (courseId, userRole) => {
     showSnackbar(success ? 'Element deleted successfully' : 'Error deleting element', success ? 'success' : 'error');
   };
 
-  const handleFileUpload = async (elementId, file, comment) => {
+  const handleFileUpload = async (elementId, file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('comment', comment);
     formData.append('elementId', elementId);
-    formData.append('studentId', user?.id);
+    formData.append('userId', user?.id);
 
-    const success = await apiCall('/upload', {
+    const success = await apiCall('/file/upload', {
       method: 'POST',
-      data: formData,
-      headers: { 'Content-Type': 'multipart/form-data' }
+      data: formData
     });
 
     showSnackbar(success ? 'File uploaded successfully' : 'Error uploading file', success ? 'success' : 'error');
@@ -147,7 +148,6 @@ const useApi = (courseId, userRole) => {
   const handleConnectionCreate = async (sourceElementId, targetElementId) => {
     const success = await apiCall('/relationship', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
       data: { sourceElementId, targetElementId, courseId: parseInt(courseId) }
     });
     showSnackbar(success ? 'Connection created successfully' : 'Error creating connection', success ? 'success' : 'error');
@@ -163,7 +163,6 @@ const useApi = (courseId, userRole) => {
 
       const success = await apiCall('/relationship', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
         data: {
           sourceElementId: parentElementId,
           targetElementId: childElementId,

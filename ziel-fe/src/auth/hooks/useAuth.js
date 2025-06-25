@@ -9,10 +9,8 @@ export const useAuth = () => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  // Configure axios to send credentials (cookies) with every request
   axios.defaults.withCredentials = true;
 
-  // Function to fetch current user data
   const fetchUser = useCallback(async () => {
     try {
       const response = await axios.get('http://localhost:8080/api/user/me');
@@ -23,7 +21,6 @@ export const useAuth = () => {
       setUser(null);
       setIsAuthenticated(false);
       if (err.response && err.response.status === 401) {
-        // Token might be expired, try to refresh
         await refreshToken();
       }
     } finally {
@@ -31,13 +28,12 @@ export const useAuth = () => {
     }
   }, []);
 
-  // Function to handle login
   const login = async (credentials) => {
     setIsLoading(true);
     try {
       await axios.post('http://localhost:8080/api/auth/login', credentials);
-      await fetchUser(); // Fetch user data after successful login
-      navigate('/'); // Redirect to home page after login
+      await fetchUser();
+      navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
       throw err;
@@ -46,13 +42,12 @@ export const useAuth = () => {
     }
   };
 
-  // Function to handle registration
   const register = async (userData) => {
     setIsLoading(true);
     try {
-      await axios.post('http://localhost:8080/api/auth/register', userData);
-      await fetchUser(); // Fetch user data after successful registration
-      navigate('/'); // Redirect to home page after registration
+      const response = await axios.post('http://localhost:8080/api/auth/register', userData);
+      await fetchUser();
+      return response.data;
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
       throw err;
@@ -61,11 +56,8 @@ export const useAuth = () => {
     }
   };
 
-  // Function to handle logout
   const logout = async () => {
     try {
-      // You might want to add a logout endpoint in your backend
-      // that clears the HttpOnly cookies
       await axios.post('http://localhost:8080/api/auth/logout');
       setUser(null);
       setIsAuthenticated(false);
@@ -75,11 +67,10 @@ export const useAuth = () => {
     }
   };
 
-  // Function to refresh access token
   const refreshToken = async () => {
     try {
       await axios.post('http://localhost:8080/api/auth/refresh');
-      await fetchUser(); // Try to fetch user again after token refresh
+      await fetchUser();
       return true;
     } catch (err) {
       setUser(null);
@@ -88,14 +79,12 @@ export const useAuth = () => {
     }
   };
 
-  // Initialize auth state on component mount
   useEffect(() => {
     const initializeAuth = async () => {
       await fetchUser();
     };
     initializeAuth();
 
-    // Set up axios response interceptor to handle token refresh
     const interceptor = axios.interceptors.response.use(
       (response) => response,
       async (error) => {

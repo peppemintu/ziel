@@ -5,8 +5,8 @@ const CourseTabNavigation = ({ activeTab, setActiveTab }) => {
   return (
     <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <Tabs value={activeTab} onChange={(e, newValue) => setActiveTab(newValue)}>
-        <Tab label="Table View" />
-        <Tab label="Roadmap View" />
+        <Tab label="Таблица" />
+        <Tab label="Roadmap" />
       </Tabs>
     </Box>
   );

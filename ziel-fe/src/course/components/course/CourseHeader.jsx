@@ -4,25 +4,30 @@ import { Box, Typography, Chip, Card, CardContent } from '@mui/material';
 const CourseHeader = ({ course, studyPlan }) => {
   if (!course) return null;
 
+  const ATTESTATION_FORM_LABELS_RU = {
+    EXAM: 'Экзамен',
+    CREDIT: 'Зачёт',
+  };
+
   return (
     <Card sx={{ mb: 3 }}>
       <CardContent>
         <Typography variant="h4" gutterBottom>
-          Course {course.id}
+          Курс
         </Typography>
         {studyPlan && (
           <>
             <Typography variant="body1" color="textSecondary" gutterBottom>
-              Study Year {studyPlan.studyYear} - Semester {studyPlan.semester}
+              Курс {studyPlan.studyYear} - Семестр {studyPlan.semester} - Группа {course.groupId}
             </Typography>
             <Box sx={{ display: 'flex', gap: 2, mt: 2, flexWrap: 'wrap' }}>
-              <Chip label={`${studyPlan.totalHours} Total Hours`} />
-              <Chip label={`${studyPlan.creditUnits} Credits`} />
-              <Chip label={`${studyPlan.totalAuditoryHours} Auditory Hours`} />
-              <Chip label={`${studyPlan.lectureHours} Lecture Hours`} />
-              <Chip label={`${studyPlan.practiceHours} Practice Hours`} />
-              <Chip label={`${studyPlan.labHours} Lab Hours`} />
-              <Chip label={studyPlan.attestationForm} color="primary" />
+              <Chip label={`${studyPlan.totalHours} Всего часов`} />
+              <Chip label={`${studyPlan.creditUnits} З.Е.`} />
+              <Chip label={`${studyPlan.totalAuditoryHours} Аудиторных часов`} />
+              <Chip label={`${studyPlan.lectureHours} Часов лекций`} />
+              <Chip label={`${studyPlan.practiceHours} Часов практик`} />
+              <Chip label={`${studyPlan.labHours} Часов лабораторных`} />
+              <Chip label={ATTESTATION_FORM_LABELS_RU[studyPlan.attestationForm] || studyPlan.attestationForm} color="primary" />
             </Box>
           </>
         )}

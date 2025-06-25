@@ -2,6 +2,7 @@ package com.greendal.ziel.study.controller;
 
 import com.greendal.ziel.study.dto.element.ElementRelationshipRequestDto;
 import com.greendal.ziel.study.dto.element.ElementRelationshipResponseDto;
+import com.greendal.ziel.study.dto.element.ElementResponseDto;
 import com.greendal.ziel.study.service.ElementRelationshipService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,6 +29,11 @@ public class ElementRelationshipController {
     @GetMapping
     public ResponseEntity<List<ElementRelationshipResponseDto>> getAllElementRelationships() {
         return ResponseEntity.ok(elementRelationshipService.getAllElementRelationships());
+    }
+
+    @GetMapping("/course/{courseId}")
+    public ResponseEntity<List<ElementRelationshipResponseDto>> getElementRelationshipsByCourseId(@PathVariable Long courseId) {
+        return ResponseEntity.ok(elementRelationshipService.getElementRelationshipsByCourseId(courseId));
     }
 
     @PutMapping("/{id}")

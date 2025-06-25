@@ -1,4 +1,4 @@
-const API_BASE = 'http://localhost:8080/api'; // adjust if needed
+const API_BASE = 'http://localhost:8080/api';
 
 const TOKEN_KEY = 'accessToken';
 

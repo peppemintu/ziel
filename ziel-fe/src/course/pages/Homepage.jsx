@@ -40,7 +40,7 @@ function TeacherDashboard() {
       return (
         <Container>
           <Typography variant="h5" align="center" mt={4}>
-            Please log in to access the courses
+            Пожалуйста, войдите, чтобы увидеть курсы
           </Typography>
         </Container>
       );
@@ -49,18 +49,18 @@ function TeacherDashboard() {
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Teacher Dashboard
+        Главная страница
       </Typography>
 
       {/* Course Creation Widget */}
-      <Paper elevation={3} sx={{ p: 3, mb: 4, background: 'linear-gradient(180deg, #7bbbcd 0%, #48889A 100%)' }}>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, background: 'linear-gradient(180deg, #21d375 0%, #6bbf59 100%)' }}>
         <Box sx={{ color: 'white', textAlign: 'center' }}>
           <SchoolIcon sx={{ fontSize: 60, mb: 2 }} />
           <Typography variant="h5" component="h2" gutterBottom>
-            Create New Course
+            Создать новый курс
           </Typography>
           <Typography variant="body1" sx={{ mb: 3, opacity: 0.9 }}>
-            Design and structure your course curriculum with our intuitive course creation tools
+            Создайте курс и поделитесь им со своими студентами
           </Typography>
           <Button
             component={Link}
@@ -77,19 +77,19 @@ function TeacherDashboard() {
               border: '1px solid rgba(255, 255, 255, 0.2)',
             }}
           >
-            Start Course Creation
+            Начать создание курса
           </Button>
         </Box>
       </Paper>
 
       {/* All Courses Section */}
       <Typography variant="h5" component="h2" gutterBottom sx={{ mb: 3 }}>
-        All Courses
+        Доступные курсы
       </Typography>
       <Grid container spacing={3}>
         {courses.map((course) => (
-          <Grid item xs={12} md={6} lg={4} key={course.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Grid item xs={12} sm={6} key={course.id}>
+            <Card sx={{ height: '100%', width: '100%', minWidth: '550px', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="h3" gutterBottom>
                   {course.title}
@@ -98,13 +98,13 @@ function TeacherDashboard() {
                   {course.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Discipline: {course.discipline?.name || 'N/A'}
+                  Дисциплина: {course.discipline?.name || 'N/A'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Specialty: {course.specialty?.name || 'N/A'}
+                  Специальность: {course.specialty?.name || 'N/A'}
                 </Typography>
                 <Box sx={{ mb: 2 }}>
-                  <Chip label={`Year ${course.studyPlan?.studyYear}, Sem ${course.studyPlan?.semester}`} size="small" />
+                  <Chip label={`Курс ${course.studyPlan?.studyYear}, Семестр ${course.studyPlan?.semester}`} size="small" />
                 </Box>
               </CardContent>
               <CardActions>
@@ -114,14 +114,14 @@ function TeacherDashboard() {
                   size="small"
                   variant="outlined"
                 >
-                  OPEN
+                  ОТКРЫТЬ
                 </Button>
                 <Button
                   component={Link}
                   to={`/courses/create/${course.id}`}
                   size="small"
                 >
-                  EDIT
+                  ИЗМЕНИТЬ
                 </Button>
               </CardActions>
             </Card>
@@ -136,13 +136,13 @@ function StudentDashboard() {
   const { courses, loading } = useCourseCatalog();
 
   if (loading) {
-    return <Typography>Loading courses...</Typography>;
+    return <Typography>Загрука...</Typography>;
   }
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
       <Typography variant="h4" component="h1" gutterBottom>
-        Student Dashboard
+        Главная страница
       </Typography>
 
       {/* Welcome Section */}
@@ -151,10 +151,10 @@ function StudentDashboard() {
           <BookIcon sx={{ fontSize: 40, mr: 2, color: 'primary.main' }} />
           <Box>
             <Typography variant="h5" component="h2">
-              Available Courses
+              Доступные курсы
             </Typography>
             <Typography variant="body1" color="text.secondary">
-              Explore and enroll in courses to enhance your learning journey
+              Растите и развивайтесь с прохождением курсов
             </Typography>
           </Box>
         </Box>
@@ -164,7 +164,7 @@ function StudentDashboard() {
       <Grid container spacing={3}>
         {courses.map((course) => (
           <Grid item xs={12} md={6} lg={4} key={course.id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Card sx={{ height: '100%', width: '100%', minWidth: '550px', display: 'flex', flexDirection: 'column' }}>
               <CardContent sx={{ flexGrow: 1 }}>
                 <Typography variant="h6" component="h3" gutterBottom>
                   {course.title}
@@ -173,13 +173,13 @@ function StudentDashboard() {
                   {course.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Discipline: {course.discipline?.name || 'N/A'}
+                  Дисциплина: {course.discipline?.name || 'N/A'}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Specialty: {course.specialty?.name || 'N/A'}
+                  Специальность: {course.specialty?.name || 'N/A'}
                 </Typography>
                 <Box sx={{ mb: 2 }}>
-                  <Chip label={`Year ${course.studyPlan?.studyYear}, Sem ${course.studyPlan?.semester}`} size="small" />
+                  <Chip label={`Курс ${course.studyPlan?.studyYear}, Семестр ${course.studyPlan?.semester}`} size="small" />
                 </Box>
               </CardContent>
               <CardActions>
@@ -189,7 +189,7 @@ function StudentDashboard() {
                   size="small"
                   variant="contained"
                 >
-                  View Course
+                  Просмотреть курс
                 </Button>
               </CardActions>
             </Card>
@@ -216,7 +216,7 @@ function Homepage() {
       return (
         <Container>
           <Typography variant="h5" align="center" mt={4}>
-            Please log in to access the homepage
+            Пожалуйста, войдите в систему, чтобы увидеть курсы
           </Typography>
         </Container>
       );

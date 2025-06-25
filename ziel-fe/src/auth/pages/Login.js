@@ -8,7 +8,8 @@ import {
     Box,
     CssBaseline,
     Avatar,
-    Alert
+    Alert,
+    Link,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { useState } from 'react';
@@ -23,15 +24,15 @@ export default function Login() {
     const formConfig = {
         email: {
             type: "text",
-            label: "Email Address",
+            label: "Email",
             required: true,
             validator: (val) =>
                 /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(val.trim()),
-            autoComplete: "email"
+            autoComplete: "email@gmail.com"
         },
         password: {
             type: "password",
-            label: "Password",
+            label: "Пароль",
             required: true,
             autoComplete: "current-password"
         },
@@ -53,7 +54,6 @@ export default function Login() {
             [field]: value,
         }));
 
-        // Clear error when user types
         if (fieldErrors[field]) {
             setFieldErrors(prev => ({
                 ...prev,
@@ -80,10 +80,10 @@ export default function Login() {
 
     const getValidationError = (key, value) => {
         const field = formConfig[key];
-        if (field.required && !value) return "This field is required";
+        if (field.required && !value) return "Это поле обязательно";
         if (field.validator && !field.validator(value)) {
-            if (key === 'email') return "Please enter a valid email address";
-            return "Invalid value";
+            if (key === 'email') return "Пожалуйста, введите действительный адрес";
+            return "Неверное значение";
         }
         return "";
     };
@@ -95,7 +95,7 @@ export default function Login() {
 
         try {
             await login(formData);
-            navigate('/'); // Redirect to home after successful login
+            navigate('/');
         } catch (err) {
             // Error is already handled in the useAuth hook
         }
@@ -116,7 +116,7 @@ export default function Login() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Вход в аккаунт
                 </Typography>
 
                 {error && (
@@ -154,9 +154,15 @@ export default function Login() {
                                 {isLoading ? (
                                     <CircularProgress size={24} color="inherit" />
                                 ) : (
-                                    "Sign In"
+                                    "Войти"
                                 )}
                             </Button>
+
+                            <Box sx={{ textAlign: 'center' }}>
+                              <Link href="/register" variant="body2">
+                                Нет аккаунта? Зарегистрируйтесь
+                              </Link>
+                            </Box>
                         </Stack>
                     </Paper>
                 </Box>

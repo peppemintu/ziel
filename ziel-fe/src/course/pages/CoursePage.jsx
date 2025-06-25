@@ -50,33 +50,11 @@ export default function CoursePage() {
       handleElementEdit(updatedElement);
     };
 
-    // Mock submissions data - replace with actual API call
-    const mockSubmissions = [
-      {
-        id: 1,
-        studentId: 123,
-        studentName: 'John Doe',
-        fileName: 'lab_report.pdf',
-        uploadDate: '2024-01-20',
-        status: 'NOT_VERIFIED'
-      },
-      {
-        id: 2,
-        studentId: 124,
-        studentName: 'Jane Smith',
-        fileName: 'homework.zip',
-        uploadDate: '2024-01-19',
-        status: 'CREDITED'
-      }
-    ];
-
     const handleSubmissionStatusUpdate = (submissionId, newStatus) => {
-      // Implement API call to update submission status
       console.log('Update submission', submissionId, 'to', newStatus);
     };
 
     const handleChatOpen = (studentId, elementId) => {
-      // Implement chat opening logic
       console.log('Open chat for student', studentId, 'and element', elementId);
     };
 
@@ -97,12 +75,31 @@ export default function CoursePage() {
   }
 
   return (
-    <Box sx={{ p: 4 }}>
+  <Box
+      sx={{
+        minHeight: '100vh',
+        width: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+    <Box sx={{ flexGrow: 1, p: 4 }}>
       <CourseHeader course={course} studyPlan={studyPlan} />
 
       <CourseTabNavigation activeTab={activeTab} setActiveTab={setActiveTab} />
 
-      <Box sx={{ mt: 3 }}>
+      <Box
+        sx={{
+          mt: 3,
+          backgroundColor: 'white',
+          borderRadius: 2,
+          boxShadow: 2,
+          px: 4,
+          py: 3,
+          mx: 'auto',
+          flexGrow: 1,
+        }}
+      >
         {activeTab === 0 && (
           <TableView
             elements={elements}
@@ -134,7 +131,6 @@ export default function CoursePage() {
         userRole={userRole}
         onElementUpdate={handleElementUpdate}
         onFileUpload={handleFileUpload}
-        submissions={mockSubmissions}
         onSubmissionStatusUpdate={handleSubmissionStatusUpdate}
         onChatOpen={handleChatOpen}
       />
@@ -153,5 +149,6 @@ export default function CoursePage() {
         </Alert>
       </Snackbar>
     </Box>
+  </Box>
   );
 }

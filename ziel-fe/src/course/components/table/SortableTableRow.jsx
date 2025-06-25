@@ -14,6 +14,8 @@ import ElementIcon from '../common/ElementIcon';
 import StatusChip from '../common/StatusChip';
 import { getStatusColor } from '../../utils/statusUtils';
 
+import { ELEMENT_TYPES_LABELS, ATTESTATION_FORMS_LABELS } from '../../utils/translations.js';
+
 const SortableTableRow = ({
   element,
   index,
@@ -41,7 +43,6 @@ const SortableTableRow = ({
   const hasChildren = element.children && element.children.length > 0;
 
   const handleRowClick = (event) => {
-    // Prevent row click when clicking on action buttons
     if (event.target.closest('button') || event.target.closest('[role="button"]')) {
       return;
     }
@@ -100,43 +101,58 @@ const SortableTableRow = ({
               fontSize: level > 0 ? '0.875rem' : '1rem'
             }}
           >
-            {element.elementType}
+            {ELEMENT_TYPES_LABELS[element.elementType] || element.elementType}
           </Typography>
         </Box>
       </TableCell>
+
       <TableCell>
         <Typography
           variant="body1"
           fontWeight={level === 0 ? 'bold' : 'normal'}
           sx={{ fontSize: level > 0 ? '0.875rem' : '1rem' }}
         >
-          {element.hours} hours
+          {element.name || 'Без названия'}
         </Typography>
       </TableCell>
+
+      <TableCell>
+        <Typography
+          variant="body1"
+          fontWeight={level === 0 ? 'bold' : 'normal'}
+          sx={{ fontSize: level > 0 ? '0.875rem' : '1rem' }}
+        >
+          {element.hours} час{element.hours === 1 ? '' : (element.hours < 5 ? 'а' : 'ов')}
+        </Typography>
+      </TableCell>
+
       <TableCell>
         <Typography
           variant="body2"
           color="textSecondary"
           sx={{ fontSize: level > 0 ? '0.75rem' : '0.875rem' }}
         >
-          {element.attestationForm}
+          {ATTESTATION_FORMS_LABELS[element.attestationForm] || element.attestationForm}
         </Typography>
       </TableCell>
+
       <TableCell>
         {userRole === 'STUDENT' && element.grade && (
           <Chip
-            label={`Grade: ${element.grade}`}
+            label={`Оценка: ${element.grade}`}
             size={level > 0 ? "small" : "medium"}
             color={element.grade >= 60 ? "success" : "error"}
           />
         )}
       </TableCell>
+
       {userRole === 'STUDENT' && (
         <TableCell>
           <StatusChip status={status} level={level} />
         </TableCell>
       )}
-      <TableCell align="right">
+
+      <TableCell align="left">
         <Box sx={{ display: 'flex', gap: 1 }}>
           {userRole === 'TEACHER' && (
             <>
@@ -146,20 +162,7 @@ const SortableTableRow = ({
               <IconButton size="small" onClick={() => onDelete(element.id)}>
                 <DeleteIcon />
               </IconButton>
-              <IconButton size="small">
-                {element.published ? <VisibilityIcon /> : <VisibilityOffIcon />}
-              </IconButton>
             </>
-          )}
-          {userRole === 'STUDENT' && (element.elementType === 'LABWORK' || element.elementType === 'PRACTICE') && (
-            <Button
-              size="small"
-              startIcon={<UploadIcon />}
-              onClick={() => onUpload(element.id)}
-              variant={level > 0 ? "text" : "outlined"}
-            >
-              Upload Work
-            </Button>
           )}
         </Box>
       </TableCell>

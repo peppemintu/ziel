@@ -2,6 +2,7 @@ package com.greendal.ziel.study.service.resolver;
 
 import com.greendal.ziel.auth.model.User;
 import com.greendal.ziel.auth.repository.UserRepository;
+import com.greendal.ziel.study.dto.student.StudentRequestDto;
 import com.greendal.ziel.study.model.*;
 import com.greendal.ziel.study.repository.*;
 import jakarta.persistence.EntityNotFoundException;
@@ -21,6 +22,7 @@ public class Resolver {
     private final UserRepository userRepository;
     private final ElementRepository elementRepository;
     private final StudentRepository studentRepository;
+    private final GradeSheetRepository gradeSheetRepository;
 
     @Named("resolveStudyPlan")
     public StudyPlan resolveStudyPlan(Long id) {
@@ -74,5 +76,11 @@ public class Resolver {
     public Element resolveElement(Long id) {
         return elementRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Element not found for id " + id));
+    }
+
+    @Named("resolveGradeSheet")
+    public GradeSheet resolveGradeSheet(Long id) {
+        return gradeSheetRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Grade sheet not found for id " + id));
     }
 }

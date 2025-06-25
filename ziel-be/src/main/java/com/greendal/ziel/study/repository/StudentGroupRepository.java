@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentGroupRepository extends ListCrudRepository<StudentGroup, Long> {
+    StudentGroup findBySpecialtyIdAndGroupNumber(Long specialtyId, short groupNumber);
 }

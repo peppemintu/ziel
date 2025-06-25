@@ -2,6 +2,7 @@ package com.greendal.ziel.auth.controller;
 
 import com.greendal.ziel.auth.dto.AuthRequest;
 import com.greendal.ziel.auth.dto.RegisterRequest;
+import com.greendal.ziel.auth.dto.RegisterResponse;
 import com.greendal.ziel.auth.service.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -28,8 +29,13 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public void register(@RequestBody RegisterRequest registerRequest,
-                         HttpServletResponse response) {
-        authService.register(registerRequest, response);
+    public RegisterResponse register(@RequestBody RegisterRequest registerRequest,
+                                     HttpServletResponse response) {
+        return authService.register(registerRequest, response);
+    }
+
+    @PostMapping("/logout")
+    public void logout(HttpServletResponse response) {
+        authService.logout(response);
     }
 }
