@@ -244,7 +244,7 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
     const progress = studentProgress[studentId]?.[elementId];
     if (!progress) {
       return (
-        <Tooltip title="No progress">
+        <Tooltip title="Нет прогресса">
           <Box sx={{ position: 'relative', display: 'inline-flex' }}>
             <CircularProgress
               variant="determinate"
@@ -277,7 +277,7 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
     const completed = progress.completed;
 
     return (
-      <Tooltip title={`Points: ${value}`}>
+      <Tooltip title={`Очки: ${value}`}>
         <Box sx={{ position: 'relative', display: 'inline-flex' }}>
           <CircularProgress
             variant="determinate"
@@ -315,9 +315,9 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Typography variant="body2" color={currentGrade ? 'text.primary' : 'text.secondary'}>
-              {currentGrade || 'Not graded'}
+              {currentGrade || 'Нет оценки'}
             </Typography>
-            <Tooltip title="Read-only mode">
+            <Tooltip title="Только для чтения">
               <LockIcon fontSize="small" color="disabled" />
             </Tooltip>
           </Box>
@@ -326,13 +326,13 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
         return (
           <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
             <Chip
-              label={currentGrade === 'credited' ? 'Credited' :
-                     currentGrade === 'not_credited' ? 'Not Credited' : 'Not graded'}
+              label={currentGrade === 'credited' ? 'Зачет' :
+                     currentGrade === 'not_credited' ? 'Незачет' : 'Нет оценки'}
               size="small"
               color={currentGrade === 'credited' ? 'success' :
                      currentGrade === 'not_credited' ? 'error' : 'default'}
             />
-            <Tooltip title="Read-only mode">
+            <Tooltip title="Только для чтения">
               <LockIcon fontSize="small" color="disabled" />
             </Tooltip>
           </Box>
@@ -344,10 +344,10 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <FormControl size="small" sx={{ minWidth: 80 }}>
-            <InputLabel>Grade</InputLabel>
+            <InputLabel>Оценка</InputLabel>
             <Select
               value={currentGrade}
-              label="Grade"
+              label="Оценка"
               onChange={(e) => handleGradeChange(student.id, e.target.value)}
             >
               <MenuItem value="">-</MenuItem>
@@ -356,6 +356,11 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
               <MenuItem value={3}>3</MenuItem>
               <MenuItem value={4}>4</MenuItem>
               <MenuItem value={5}>5</MenuItem>
+              <MenuItem value={6}>6</MenuItem>
+              <MenuItem value={7}>7</MenuItem>
+              <MenuItem value={8}>8</MenuItem>
+              <MenuItem value={9}>9</MenuItem>
+              <MenuItem value={10}>10</MenuItem>
             </Select>
           </FormControl>
           <IconButton
@@ -372,15 +377,15 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
       return (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
           <FormControl size="small" sx={{ minWidth: 120 }}>
-            <InputLabel>Status</InputLabel>
+            <InputLabel>Оценка</InputLabel>
             <Select
               value={currentGrade}
               label="Status"
               onChange={(e) => handleGradeChange(student.id, e.target.value)}
             >
               <MenuItem value="">-</MenuItem>
-              <MenuItem value="credited">Credited</MenuItem>
-              <MenuItem value="not_credited">Not Credited</MenuItem>
+              <MenuItem value="credited">Зачет</MenuItem>
+              <MenuItem value="not_credited">Незачет</MenuItem>
             </Select>
           </FormControl>
           <IconButton
@@ -415,7 +420,7 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
   if (!courseData || students.length === 0) {
     return (
       <Alert severity="info" sx={{ m: 2 }}>
-        No students found for this course.
+        Студенты не найдены.
       </Alert>
     );
   }
@@ -424,10 +429,10 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
     <Box sx={{ width: '100%' }}>
       <Box sx={{ mb: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="h6" component="h2">
-          Student Progress — Course {courseData.id}
+          Список студентов — Курс {courseData.id}
           {isReadOnly && (
             <Chip
-              label="Read Only"
+              label="Только для чтения"
               size="small"
               color="default"
               icon={<LockIcon />}
@@ -442,7 +447,7 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
 
       {isReadOnly && (
         <Alert severity="info" sx={{ mb: 2 }}>
-          You are viewing this page in read-only mode. Contact your instructor if you have questions.
+          Обратитесь к преподавателю если у вас есть вопросы!
         </Alert>
       )}
 
@@ -451,7 +456,7 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
           <TableHead>
             <TableRow>
               <TableCell sx={{ fontWeight: 'bold', minWidth: 150 }}>
-                Student
+                Студент
               </TableCell>
               {courseElements.map((element) => (
                 <TableCell
@@ -460,13 +465,13 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
                 >
                   <Tooltip title={`${element.type} - Max: ${element.maxPoints || 'N/A'}pts`}>
                     <Typography variant="caption" display="block">
-                      {element.name || `Element ${element.id}`}
+                      {element.name || `Элемент ${element.id}`}
                     </Typography>
                   </Tooltip>
                 </TableCell>
               ))}
               <TableCell sx={{ fontWeight: 'bold', minWidth: 150 }}>
-                {isExamCourse ? 'Grade' : 'Status'}
+                {isExamCourse ? 'Оценка' : 'Зачет'}
               </TableCell>
             </TableRow>
           </TableHead>
@@ -497,11 +502,11 @@ const StudentProgressTable = ({ courseId, onGradeUpdate, userRole = 'TEACHER' })
 
       <Box sx={{ mt: 2, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Typography variant="body2" color="text.secondary">
-          Total students: {students.length}
+          Всего студентов: {students.length}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Course type: {isExamCourse ? 'Exam' : 'Credit'} |
-          Mode: {isReadOnly ? 'Read-only' : 'Editable'}
+          Форма: {isExamCourse ? 'Экзамен' : 'Зачет'} |
+          Режим: {isReadOnly ? 'Чтение' : 'Изменение'}
         </Typography>
       </Box>
     </Box>
